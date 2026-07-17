@@ -2,7 +2,6 @@
   "name": "@stockline/source",
   "version": "0.0.0",
   "license": "MIT",
-  "scripts": {},
   "private": true,
   "dependencies": {
     "react": "^19.0.0",
@@ -67,5 +66,6 @@
   },
   "workspaces": [
     "apps/*"
-  ]
+  ],
+  "packageManager": "yarn@4.9.1"
 }

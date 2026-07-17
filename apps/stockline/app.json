@@ -1,4 +1,28 @@
 {
-  "name": "Stockline",
-  "displayName": "Stockline"
+  "expo": {
+    "name": "Stockline",
+    "slug": "stockline",
+    "version": "1.0.0",
+    "orientation": "portrait",
+    "userInterfaceStyle": "dark",
+    "ios": {
+      "supportsTablet": false,
+      "bundleIdentifier": "com.example.myapp"
+    },
+    "android": {
+      "package": "com.example.myapp",
+      "adaptiveIcon": {
+        "foregroundImage": "./assets/icon.png",
+        "backgroundColor": "#0F0F10"
+      }
+    },
+    "plugins": [
+      ["expo-router", { "root": "./src/app" }],
+      "expo-font",
+      "expo-secure-store"
+    ],
+    "experiments": {
+      "typedRoutes": true
+    }
+  }
 }

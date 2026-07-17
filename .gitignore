@@ -116,3 +116,9 @@ yarn-error.log
 test-output
 
 vite.config.*.timestamp*
+
+# apps/mobile/.gitignore
+ios/
+android/
+.yarn/cache/
+.yarn/install-state.gz
