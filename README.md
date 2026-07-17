@@ -1,101 +1,270 @@
 # Stockline
 
-<a alt="Nx logo" href="https://nx.dev" target="_blank" rel="noreferrer"><img src="https://raw.githubusercontent.com/nrwl/nx/master/images/nx-logo.png" width="45"></a>
+Stockline is a cross-platform mobile application built with **React Native**, **Expo SDK 52**, **Nx**, and **Yarn Berry**.
 
-✨ Your new, shiny [Nx workspace](https://nx.dev) is ready ✨.
+## Tech stack
 
-[Learn more about this workspace setup and its capabilities](https://nx.dev/nx-api/react-native?utm_source=nx_project&amp;utm_medium=readme&amp;utm_campaign=nx_projects) or run `npx nx graph` to visually explore what was created. Now, let's get you up to speed!
+- React Native
+- Expo SDK 52
+- Nx 22
+- Yarn 4
+- TypeScript
+- Metro
 
-## Run tasks
+## Project structure
 
-To run the dev server for your app, use:
-
-```sh
-npx nx serve stockline
+```text
+stockline/
+├── apps/
+│   └── stockline/
+│       ├── src/
+│       ├── app.json
+│       ├── metro.config.js
+│       └── project.json
+├── nx.json
+├── package.json
+├── tsconfig.base.json
+├── .yarnrc.yml
+└── README.md
 ```
 
-To create a production bundle:
+## Prerequisites
 
-```sh
-npx nx build stockline
+Before running the project, install:
+
+- Node.js
+- Corepack
+- Yarn 4
+- Xcode for iOS development
+- Android Studio and JDK 17 for Android development
+- CocoaPods for iOS native dependencies
+
+Confirm the main tools are available:
+
+```bash
+node --version
+yarn --version
+pod --version
 ```
 
-To see all available targets to run for a project, run:
+## Installation
 
-```sh
-npx nx show project stockline
+Clone the repository:
+
+```bash
+git clone <your-repository-url>
+cd stockline
 ```
 
-These targets are either [inferred automatically](https://nx.dev/concepts/inferred-tasks?utm_source=nx_project&utm_medium=readme&utm_campaign=nx_projects) or defined in the `project.json` or `package.json` files.
+Enable Corepack and install the project dependencies:
 
-[More about running tasks in the docs &raquo;](https://nx.dev/features/run-tasks?utm_source=nx_project&utm_medium=readme&utm_campaign=nx_projects)
-
-## Add new projects
-
-While you could add new projects to your workspace manually, you might want to leverage [Nx plugins](https://nx.dev/concepts/nx-plugins?utm_source=nx_project&utm_medium=readme&utm_campaign=nx_projects) and their [code generation](https://nx.dev/features/generate-code?utm_source=nx_project&utm_medium=readme&utm_campaign=nx_projects) feature.
-
-Use the plugin's generator to create new projects.
-
-To generate a new application, use:
-
-```sh
-npx nx g @nx/react-native:app demo
+```bash
+corepack enable
+yarn install
 ```
 
-To generate a new library, use:
+## Running the app
 
-```sh
-npx nx g @nx/react:lib mylib
+Start the Expo development server from the workspace root:
+
+```bash
+yarn nx start stockline
 ```
 
-You can use `npx nx list` to get a list of installed plugins. Then, run `npx nx list <plugin-name>` to learn about more specific capabilities of a particular plugin. Alternatively, [install Nx Console](https://nx.dev/getting-started/editor-setup?utm_source=nx_project&utm_medium=readme&utm_campaign=nx_projects) to browse plugins and generators in your IDE.
+You can also start Expo directly from the application folder:
 
-[Learn more about Nx plugins &raquo;](https://nx.dev/concepts/nx-plugins?utm_source=nx_project&utm_medium=readme&utm_campaign=nx_projects) | [Browse the plugin registry &raquo;](https://nx.dev/plugin-registry?utm_source=nx_project&utm_medium=readme&utm_campaign=nx_projects)
-
-## Set up CI!
-
-### Step 1
-
-To connect to Nx Cloud, run the following command:
-
-```sh
-npx nx connect
+```bash
+cd apps/stockline
+yarn expo start
 ```
 
-Connecting to Nx Cloud ensures a [fast and scalable CI](https://nx.dev/ci/intro/why-nx-cloud?utm_source=nx_project&utm_medium=readme&utm_campaign=nx_projects) pipeline. It includes features such as:
+After Metro starts:
 
-- [Remote caching](https://nx.dev/ci/features/remote-cache?utm_source=nx_project&utm_medium=readme&utm_campaign=nx_projects)
-- [Task distribution across multiple machines](https://nx.dev/ci/features/distribute-task-execution?utm_source=nx_project&utm_medium=readme&utm_campaign=nx_projects)
-- [Automated e2e test splitting](https://nx.dev/ci/features/split-e2e-tasks?utm_source=nx_project&utm_medium=readme&utm_campaign=nx_projects)
-- [Task flakiness detection and rerunning](https://nx.dev/ci/features/flaky-tasks?utm_source=nx_project&utm_medium=readme&utm_campaign=nx_projects)
+- Press `i` to open the iOS Simulator.
+- Press `a` to open an Android emulator.
+- Scan the QR code with a compatible development build when using a physical device.
 
-### Step 2
+To clear the Metro cache:
 
-Use the following command to configure a CI workflow for your workspace:
-
-```sh
-npx nx g ci-workflow
+```bash
+yarn nx start stockline --clear
 ```
 
-[Learn more about Nx on CI](https://nx.dev/ci/intro/ci-with-nx#ready-get-started-with-your-provider?utm_source=nx_project&utm_medium=readme&utm_campaign=nx_projects)
+If the Nx target does not forward Expo arguments, run:
 
-## Install Nx Console
+```bash
+cd apps/stockline
+yarn expo start --clear
+```
 
-Nx Console is an editor extension that enriches your developer experience. It lets you run tasks, generate code, and improves code autocompletion in your IDE. It is available for VSCode and IntelliJ.
+## Nx commands
 
-[Install Nx Console &raquo;](https://nx.dev/getting-started/editor-setup?utm_source=nx_project&utm_medium=readme&utm_campaign=nx_projects)
+View the available projects:
 
-## Useful links
+```bash
+yarn nx show projects
+```
 
-Learn more:
+View all configured targets for Stockline:
 
-- [Learn more about this workspace setup](https://nx.dev/nx-api/react-native?utm_source=nx_project&amp;utm_medium=readme&amp;utm_campaign=nx_projects)
-- [Learn about Nx on CI](https://nx.dev/ci/intro/ci-with-nx?utm_source=nx_project&utm_medium=readme&utm_campaign=nx_projects)
-- [Releasing Packages with Nx release](https://nx.dev/features/manage-releases?utm_source=nx_project&utm_medium=readme&utm_campaign=nx_projects)
-- [What are Nx plugins?](https://nx.dev/concepts/nx-plugins?utm_source=nx_project&utm_medium=readme&utm_campaign=nx_projects)
+```bash
+yarn nx show project stockline
+```
 
-And join the Nx community:
-- [Discord](https://go.nx.dev/community)
-- [Follow us on X](https://twitter.com/nxdevtools) or [LinkedIn](https://www.linkedin.com/company/nrwl)
-- [Our Youtube channel](https://www.youtube.com/@nxdevtools)
-- [Our blog](https://nx.dev/blog?utm_source=nx_project&utm_medium=readme&utm_campaign=nx_projects)
+Open the Nx dependency graph:
+
+```bash
+yarn nx graph
+```
+
+Run a target using:
+
+```bash
+yarn nx <target> stockline
+```
+
+## Expo checks
+
+Validate the Expo configuration and dependencies:
+
+```bash
+cd apps/stockline
+yarn expo-doctor
+```
+
+Where dependency versions need alignment, run:
+
+```bash
+yarn expo install --fix
+```
+
+## iOS setup
+
+CocoaPods is only required for iOS native projects.
+
+When an `ios` directory exists, install its native dependencies with:
+
+```bash
+cd apps/stockline/ios
+pod install
+```
+
+For an Expo managed project using Continuous Native Generation, native folders can be generated with:
+
+```bash
+cd apps/stockline
+yarn expo prebuild
+```
+
+Avoid manually changing generated native files unless the project intentionally uses the bare workflow.
+
+## Android setup
+
+Android does not use CocoaPods.
+
+Before running Android, ensure that:
+
+- Android Studio is installed.
+- An Android SDK is configured.
+- An emulator is running or a physical device is connected.
+- JDK 17 is active.
+
+Start Expo and press `a`, or run the configured Android target when one is available.
+
+## Package management
+
+This project uses Yarn Berry with the `node-modules` linker.
+
+The `.yarnrc.yml` file should include:
+
+```yaml
+nodeLinker: node-modules
+enableGlobalCache: false
+```
+
+Use Yarn for dependency management:
+
+```bash
+yarn add <package>
+yarn add -D <package>
+yarn remove <package>
+```
+
+Do not mix `npm install` and `yarn install` in this repository.
+
+## Git workflow
+
+Create a new branch before starting a change:
+
+```bash
+git checkout -b feature/your-feature-name
+```
+
+Commit your work:
+
+```bash
+git add .
+git commit -m "feat: describe the change"
+```
+
+Push the branch:
+
+```bash
+git push -u origin feature/your-feature-name
+```
+
+## Troubleshooting
+
+### Nx cannot find the `start` target
+
+Confirm that `apps/stockline/project.json` contains a `start` target:
+
+```json
+{
+  "targets": {
+    "start": {
+      "executor": "nx:run-commands",
+      "cache": false,
+      "continuous": true,
+      "options": {
+        "command": "yarn exec expo start",
+        "cwd": "apps/stockline"
+      }
+    }
+  }
+}
+```
+
+### Yarn cannot find the `nx` command
+
+Run the command from the workspace root:
+
+```bash
+cd ~/Documents/stockline
+yarn nx show projects
+```
+
+### Metro cache issues
+
+```bash
+cd apps/stockline
+yarn expo start --clear
+```
+
+### Expo configuration issues
+
+```bash
+cd apps/stockline
+yarn expo-doctor
+```
+
+## Contributing
+
+1. Create a feature branch.
+2. Make and test your changes.
+3. Use a clear conventional commit message.
+4. Push the branch and open a pull request.
+
+## License
+
+Add the appropriate licence for this project before public distribution.
