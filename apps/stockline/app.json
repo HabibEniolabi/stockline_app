@@ -5,24 +5,42 @@
     "version": "1.0.0",
     "orientation": "portrait",
     "userInterfaceStyle": "dark",
+    "icon": "./assets/stockline-logo.png",
     "ios": {
       "supportsTablet": false,
-      "bundleIdentifier": "com.example.myapp"
+      "bundleIdentifier": "com.sudohabib.stockline",
+      "infoPlist": {
+        "ITSAppUsesNonExemptEncryption": false
+      }
     },
     "android": {
-      "package": "com.example.myapp",
+      "package": "com.sudohabib.stockline",
       "adaptiveIcon": {
-        "foregroundImage": "./assets/icon.png",
-        "backgroundColor": "#0F0F10"
+        "foregroundImage": "./assets/stockline-logo.png",
+        "backgroundColor": "#3649D8"
       }
     },
     "plugins": [
-      ["expo-router", { "root": "./src/app" }],
+      [
+        "expo-router",
+        {
+          "root": "./src/app"
+        }
+      ],
       "expo-font",
       "expo-secure-store"
     ],
     "experiments": {
       "typedRoutes": true
+    },
+    "extra": {
+      "router": {
+        "origin": false,
+        "root": "./src/app"
+      },
+      "eas": {
+        "projectId": "edf27304-1d51-4d14-a4d2-f0ef5fde2272"
+      }
     }
   }
 }
