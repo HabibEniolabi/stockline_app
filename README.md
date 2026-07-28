@@ -74,7 +74,7 @@ yarn nx start stockline
 You can also start Expo directly from the application folder:
 
 ```bash
-cd apps/stockline
+cd apps/mobile
 yarn expo start
 ```
 
@@ -93,7 +93,7 @@ yarn nx start stockline --clear
 If the Nx target does not forward Expo arguments, run:
 
 ```bash
-cd apps/stockline
+cd apps/mobile
 yarn expo start --clear
 ```
 
@@ -128,7 +128,7 @@ yarn nx <target> stockline
 Validate the Expo configuration and dependencies:
 
 ```bash
-cd apps/stockline
+cd apps/mobile
 yarn expo-doctor
 ```
 
@@ -145,14 +145,14 @@ CocoaPods is only required for iOS native projects.
 When an `ios` directory exists, install its native dependencies with:
 
 ```bash
-cd apps/stockline/ios
+cd apps/mobile/ios
 pod install
 ```
 
 For an Expo managed project using Continuous Native Generation, native folders can be generated with:
 
 ```bash
-cd apps/stockline
+cd apps/mobile
 yarn expo prebuild
 ```
 
@@ -217,7 +217,7 @@ git push -u origin feature/your-feature-name
 
 ### Nx cannot find the `start` target
 
-Confirm that `apps/stockline/project.json` contains a `start` target:
+Confirm that `apps/mobile/project.json` contains a `start` target:
 
 ```json
 {
@@ -228,7 +228,7 @@ Confirm that `apps/stockline/project.json` contains a `start` target:
       "continuous": true,
       "options": {
         "command": "yarn exec expo start",
-        "cwd": "apps/stockline"
+        "cwd": "apps/mobile"
       }
     }
   }
@@ -247,14 +247,14 @@ yarn nx show projects
 ### Metro cache issues
 
 ```bash
-cd apps/stockline
+cd apps/mobile
 yarn expo start --clear
 ```
 
 ### Expo configuration issues
 
 ```bash
-cd apps/stockline
+cd apps/mobile
 yarn expo-doctor
 ```
 
