@@ -4,7 +4,7 @@
     "slug": "stockline",
     "version": "1.0.0",
     "orientation": "portrait",
-    "userInterfaceStyle": "dark",
+    "userInterfaceStyle": "light",
     "icon": "./assets/stockline-logo.png",
     "ios": {
       "supportsTablet": false,

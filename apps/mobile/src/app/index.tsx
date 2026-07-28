@@ -1,9 +1,17 @@
-import { View, Text } from 'react-native';
- 
-export default function Index() {
+import { View, Text, StyleSheet } from 'react-native';
+
+export default function HomeScreen() {
   return (
-    <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
-      <Text style={{ color: '#fff' }}>Hello, world</Text>
+    <View style={styles.container}>
+      <Text>Stockline</Text>
     </View>
   );
 }
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+});
