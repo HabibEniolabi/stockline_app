@@ -5110,6 +5110,40 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@stockline/mobile@workspace:apps/mobile":
+  version: 0.0.0-use.local
+  resolution: "@stockline/mobile@workspace:apps/mobile"
+  dependencies:
+    "@babel/core": "npm:^7.25.2"
+    "@expo/metro-config": "npm:~0.19.0"
+    "@react-native/metro-config": "npm:*"
+    "@types/react": "npm:~18.3.12"
+    expo: "npm:~52.0.49"
+    expo-constants: "npm:~17.0.8"
+    expo-dev-client: "npm:~5.0.20"
+    expo-font: "npm:~13.0.4"
+    expo-linking: "npm:~7.0.5"
+    expo-router: "npm:~4.0.20"
+    expo-secure-store: "npm:~14.0.1"
+    expo-splash-screen: "npm:~0.29.24"
+    expo-status-bar: "npm:~2.0.1"
+    metro: "npm:0.81.5"
+    metro-cache: "npm:0.81.5"
+    metro-cache-key: "npm:0.81.5"
+    metro-config: "npm:0.81.5"
+    metro-core: "npm:0.81.5"
+    metro-resolver: "npm:0.81.5"
+    metro-transform-worker: "npm:0.81.5"
+    react: "npm:18.3.1"
+    react-native: "npm:0.76.9"
+    react-native-gesture-handler: "npm:~2.20.2"
+    react-native-reanimated: "npm:~3.16.1"
+    react-native-safe-area-context: "npm:4.12.0"
+    react-native-screens: "npm:~4.4.0"
+    react-native-svg: "npm:15.8.0"
+  languageName: unknown
+  linkType: soft
+
 "@stockline/source@workspace:.":
   version: 0.0.0-use.local
   resolution: "@stockline/source@workspace:."
@@ -5155,40 +5189,6 @@ __metadata:
     typescript-eslint: "npm:^8.40.0"
     vite: "npm:^8.0.0"
     vitest: "npm:~4.1.0"
-  languageName: unknown
-  linkType: soft
-
-"@stockline/stockline@workspace:apps/stockline":
-  version: 0.0.0-use.local
-  resolution: "@stockline/stockline@workspace:apps/stockline"
-  dependencies:
-    "@babel/core": "npm:^7.25.2"
-    "@expo/metro-config": "npm:~0.19.0"
-    "@react-native/metro-config": "npm:*"
-    "@types/react": "npm:~18.3.12"
-    expo: "npm:~52.0.49"
-    expo-constants: "npm:~17.0.8"
-    expo-dev-client: "npm:~5.0.20"
-    expo-font: "npm:~13.0.4"
-    expo-linking: "npm:~7.0.5"
-    expo-router: "npm:~4.0.20"
-    expo-secure-store: "npm:~14.0.1"
-    expo-splash-screen: "npm:~0.29.24"
-    expo-status-bar: "npm:~2.0.1"
-    metro: "npm:0.81.5"
-    metro-cache: "npm:0.81.5"
-    metro-cache-key: "npm:0.81.5"
-    metro-config: "npm:0.81.5"
-    metro-core: "npm:0.81.5"
-    metro-resolver: "npm:0.81.5"
-    metro-transform-worker: "npm:0.81.5"
-    react: "npm:18.3.1"
-    react-native: "npm:0.76.9"
-    react-native-gesture-handler: "npm:~2.20.2"
-    react-native-reanimated: "npm:~3.16.1"
-    react-native-safe-area-context: "npm:4.12.0"
-    react-native-screens: "npm:~4.4.0"
-    react-native-svg: "npm:15.8.0"
   languageName: unknown
   linkType: soft
 

@@ -32,7 +32,7 @@ const rollupPlugin = (matchers: RegExp[]) => ({
 
 export default defineConfig({
   root: import.meta.dirname,
-  cacheDir: '../../node_modules/.vite/apps/stockline',
+  cacheDir: '../../node_modules/.vite/apps/mobile',
   define: {
     global: 'window',
   },
@@ -48,7 +48,7 @@ export default defineConfig({
   build: {
     reportCompressedSize: true,
     commonjsOptions: { transformMixedEsModules: true },
-    outDir: '../../dist/apps/stockline/web',
+    outDir: '../../dist/apps/mobile/web',
     rollupOptions: {
       plugins: [rollupPlugin([/react-native-vector-icons/])],
     },

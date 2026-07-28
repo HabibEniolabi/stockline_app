@@ -23,5 +23,5 @@ module.exports = {
   transformIgnorePatterns: [
     'node_modules/(?!(.pnpm/.+/node_modules/)?(react-native|@react-native(-community)?)/)',
   ],
-  coverageDirectory: '../../coverage/apps/stockline',
+  coverageDirectory: '../../coverage/apps/mobile',
 };
