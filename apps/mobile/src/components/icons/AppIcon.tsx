@@ -18,7 +18,8 @@ export type AppIconName =
   | 'search'
   | 'settings'
   | 'close'
-  | 'back';
+  | 'back'
+  | 'visibilityOff';
 
 interface AppIconProps {
   name: AppIconName;
@@ -61,6 +62,10 @@ const icons: Record<
   visibility: {
     default: 'eye-outline',
     focused: 'eye',
+  },
+  visibilityOff: {
+    default: 'eye-off-outline',
+    focused: 'eye-off',
   },
   add: {
     default: 'add-circle-outline',
