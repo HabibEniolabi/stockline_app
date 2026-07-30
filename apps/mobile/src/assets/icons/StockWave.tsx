@@ -1,10 +1,10 @@
 import * as React from "react"
 import { SVGProps } from "react"
 
-interface StocklineProps extends SVGProps<SVGSVGElement> {
+interface StockWaveProps extends SVGProps<SVGSVGElement> {
     color?: string;
 }
-const Stockline = ({color= "#3E52C1", ...props}: StocklineProps) => (
+const StockWave = ({color= "#3E52C1", ...props}: StockWaveProps) => (
   <svg
     xmlns="http://www.w3.org/2000/svg"
     width="1em"
@@ -25,4 +25,4 @@ const Stockline = ({color= "#3E52C1", ...props}: StocklineProps) => (
     />
   </svg>
 )
-export default Stockline
+export default StockWave

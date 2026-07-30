@@ -1,7 +1,7 @@
 /// <reference types="jest" />
 /// <reference types="node" />
 module.exports = {
-  displayName: '@stockline/stockline',
+  displayName: '@stockwave/mobile',
   preset: 'react-native',
   resolver: '@nx/jest/plugins/resolver',
   moduleFileExtensions: ['ts', 'js', 'html', 'tsx', 'jsx'],
