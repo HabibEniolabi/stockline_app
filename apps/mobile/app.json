@@ -18,7 +18,7 @@
       "adaptiveIcon": {
         "foregroundImage": "./assets/stockwave-logo.png",
         "backgroundColor": "#3649D8",
-         "monochromeImage": "./src/assets/stockwave-android-monochrome.png"
+        "monochromeImage": "./src/assets/stockwave-android-monochrome.png"
       }
     },
     "plugins": [
@@ -40,8 +40,9 @@
         "root": "./src/app"
       },
       "eas": {
-        "projectId": "edf27304-1d51-4d14-a4d2-f0ef5fde2272"
+        "projectId": "28fc4abc-8e12-48a8-8091-e805e61c9a96"
       }
-    }
+    },
+    "owner": "sudohabib"
   }
 }
