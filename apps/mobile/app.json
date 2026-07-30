@@ -1,23 +1,24 @@
 {
   "expo": {
-    "name": "Stockline",
+    "name": "StockWave",
     "slug": "stockline",
     "version": "1.0.0",
     "orientation": "portrait",
     "userInterfaceStyle": "light",
-    "icon": "./assets/stockline-logo.png",
+    "icon": "./assets/stockwave-logo.png",
     "ios": {
       "supportsTablet": false,
-      "bundleIdentifier": "com.sudohabib.stockline",
+      "bundleIdentifier": "com.sudohabib.stockwave",
       "infoPlist": {
         "ITSAppUsesNonExemptEncryption": false
       }
     },
     "android": {
-      "package": "com.sudohabib.stockline",
+      "package": "com.sudohabib.stockwave",
       "adaptiveIcon": {
-        "foregroundImage": "./assets/stockline-logo.png",
-        "backgroundColor": "#3649D8"
+        "foregroundImage": "./assets/stockwave-logo.png",
+        "backgroundColor": "#3649D8",
+         "monochromeImage": "./src/assets/stockwave-logo.png"
       }
     },
     "plugins": [

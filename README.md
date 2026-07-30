@@ -1,6 +1,6 @@
-# Stockline
+# StockWave
 
-Stockline is a cross-platform mobile application built with **React Native**, **Expo SDK 52**, **Nx**, and **Yarn Berry**.
+Stockwave is a cross-platform mobile application built with **React Native**, **Expo SDK 52**, **Nx**, and **Yarn Berry**.
 
 ## Tech stack
 
@@ -14,9 +14,9 @@ Stockline is a cross-platform mobile application built with **React Native**, **
 ## Project structure
 
 ```text
-stockline/
+stockwave/
 ├── apps/
-│   └── stockline/
+│   └── mobile/
 │       ├── src/
 │       ├── app.json
 │       ├── metro.config.js
@@ -53,7 +53,7 @@ Clone the repository:
 
 ```bash
 git clone <your-repository-url>
-cd stockline
+cd stockwave
 ```
 
 Enable Corepack and install the project dependencies:
@@ -68,7 +68,7 @@ yarn install
 Start the Expo development server from the workspace root:
 
 ```bash
-yarn nx start stockline
+yarn nx start stockwave
 ```
 
 You can also start Expo directly from the application folder:
@@ -87,7 +87,7 @@ After Metro starts:
 To clear the Metro cache:
 
 ```bash
-yarn nx start stockline --clear
+yarn nx start stockwave --clear
 ```
 
 If the Nx target does not forward Expo arguments, run:
@@ -105,10 +105,10 @@ View the available projects:
 yarn nx show projects
 ```
 
-View all configured targets for Stockline:
+View all configured targets for stockwave:
 
 ```bash
-yarn nx show project stockline
+yarn nx show project stockwave
 ```
 
 Open the Nx dependency graph:
@@ -120,7 +120,7 @@ yarn nx graph
 Run a target using:
 
 ```bash
-yarn nx <target> stockline
+yarn nx <target> stockwave
 ```
 
 ## Expo checks
@@ -240,7 +240,7 @@ Confirm that `apps/mobile/project.json` contains a `start` target:
 Run the command from the workspace root:
 
 ```bash
-cd ~/Documents/stockline
+cd ~/Documents/stockwave
 yarn nx show projects
 ```
 
