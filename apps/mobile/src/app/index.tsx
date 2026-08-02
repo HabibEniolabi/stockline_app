@@ -3,7 +3,7 @@ import { useEffect } from 'react';
 import { router } from 'expo-router';
 
 import StockWave from '../assets/icons/StockWave';
-import { typography } from '../theme/typography';
+import { getTypography, typography } from '../theme/typography';
 import { colors } from '../theme/colors';
 
 export default function Index() {
@@ -18,7 +18,14 @@ export default function Index() {
     <View style={styles.container}>
       <View style={styles.brand}>
         <StockWave />
-        <Text style={styles.brandName}>StockWave</Text>
+        <Text
+          style={[
+            getTypography('bodyMedium'),
+            styles.brandName,
+          ]}
+        >
+          StockWave
+        </Text>
       </View>
     </View>
   );
@@ -32,13 +39,12 @@ const styles = StyleSheet.create({
     backgroundColor: colors.other.white,
   },
   brand: {
-    flexDirection: "row",
-    alignItems: "center",
+    flexDirection: 'row',
+    alignItems: 'center',
     gap: 12,
   },
   brandName: {
-    ...typography.heading3,
-    color: colors.neutral[900]
-  }
+    ...typography.heading2,
+    color: colors.neutral[900],
+  },
 });
-

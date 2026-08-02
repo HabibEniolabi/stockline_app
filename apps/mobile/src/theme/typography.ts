@@ -1,3 +1,5 @@
+import { TextStyle } from "react-native";
+
 export const fontFamily = {
   regular: 'Inter-Regular',
   medium: 'Inter-Medium',
@@ -64,3 +66,16 @@ export const typography = {
     lineHeight: 15,
   },
 } as const;
+
+export type TypographyVariant = keyof typeof typography;
+export type TypographyWeight = keyof typeof fontFamily;
+
+export function getTypography(
+  variant: TypographyVariant,
+  weight?: TypographyWeight,
+): TextStyle {
+  return {
+    ...typography[variant],
+    ...(weight ? { fontFamily: fontFamily[weight] } : {}),
+  };
+}

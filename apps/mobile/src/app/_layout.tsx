@@ -12,6 +12,12 @@ const Layout = () => {
             animation: 'fade',
           }}
         />
+         <Stack.Screen
+          name="onboarding"
+          options={{
+            animation: 'fade',
+          }}
+        />
       </Stack>
     </>
   );
