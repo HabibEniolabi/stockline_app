@@ -4,6 +4,8 @@ import {
   StyleSheet,
   KeyboardAvoidingView,
   Platform,
+  ScrollView,
+  Pressable,
 } from 'react-native';
 import { spacing } from '../../theme/spacing';
 import { colors } from '../../theme/colors';
@@ -14,6 +16,9 @@ import { useState } from 'react';
 import { router } from 'expo-router';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { Button } from '../../components/ui/Button';
+import { getTypography } from '../../theme/typography';
+import Apple from '../../assets/icons/Apple';
+import Google from '../../assets/icons/Google';
 
 export default function SignUpScreen() {
   const [email, setEmail] = useState('');
@@ -79,82 +84,131 @@ export default function SignUpScreen() {
     router.push('/');
   };
 
+  const handleGoogleSignUp = () => {
+    console.log('Continue with Google');
+  };
+
+  const handleAppleSignUp = () => {
+    console.log('Continue with Apple');
+  };
+
   const formIsComplete = !email.trim() || !password || !username.trim();
   return (
     <SafeAreaView style={styles.safeArea}>
       <KeyboardAvoidingView
-        style={styles.container}
+        style={styles.keyboardView}
         behavior={Platform.OS === 'ios' ? 'padding' : undefined}
       >
-        <AuthHeader
-          icon={<StockWave width={32} height={32} />}
-          title="Join StockWave!"
-          description="Embark on your investment journey with a\nsingle dollar."
-        />
+        <ScrollView
+          contentContainerStyle={styles.content}
+          keyboardShouldPersistTaps="handled"
+          showsVerticalScrollIndicator={false}
+        >
+          <View style={styles.mainContent}>
+            <AuthHeader
+              icon={<StockWave width={32} height={32} />}
+              title="Join StockWave!"
+              description="Embark on your investment journey with a\nsingle dollar."
+            />
 
-        <View style={styles.form}>
-          <TextField
-            placeholder="Enter your username"
-            value={username}
-            error={usernameError}
-            autoCapitalize="none"
-            autoCorrect={false}
-            autoComplete="username"
-            textContentType="username"
-            returnKeyType="next"
-            onChangeText={(value) => {
-              setUsername(value);
+            <View style={styles.form}>
+              <TextField
+                placeholder="Enter your username"
+                value={username}
+                error={usernameError}
+                autoCapitalize="none"
+                autoCorrect={false}
+                autoComplete="username"
+                textContentType="username"
+                returnKeyType="next"
+                onChangeText={(value) => {
+                  setUsername(value);
 
-              if (usernameError) {
-                setUsernameError('');
-              }
-            }}
-          />
-          <TextField
-            placeholder="Email"
-            value={email}
-            error={emailError}
-            keyboardType="email-address"
-            autoCapitalize="none"
-            autoCorrect={false}
-            autoComplete="email"
-            textContentType="emailAddress"
-            returnKeyType="next"
-            onChangeText={(value) => {
-              setEmail(value);
+                  if (usernameError) {
+                    setUsernameError('');
+                  }
+                }}
+              />
+              <TextField
+                placeholder="Email"
+                value={email}
+                error={emailError}
+                keyboardType="email-address"
+                autoCapitalize="none"
+                autoCorrect={false}
+                autoComplete="email"
+                textContentType="emailAddress"
+                returnKeyType="next"
+                onChangeText={(value) => {
+                  setEmail(value);
 
-              if (emailError) {
-                setEmailError('');
-              }
-            }}
-          />
-          <TextField
-            placeholder="Enter your password"
-            value={password}
-            error={passwordError}
-            secureTextEntry
-            autoCapitalize="none"
-            autoCorrect={false}
-            autoComplete="new-password"
-            textContentType="newPassword"
-            onSubmitEditing={handleContinue}
-            returnKeyType="done"
-            onChangeText={(value) => {
-              setPassword(value);
+                  if (emailError) {
+                    setEmailError('');
+                  }
+                }}
+              />
+              <TextField
+                placeholder="Enter your password"
+                value={password}
+                error={passwordError}
+                secureTextEntry
+                autoCapitalize="none"
+                autoCorrect={false}
+                autoComplete="new-password"
+                textContentType="newPassword"
+                onSubmitEditing={handleContinue}
+                returnKeyType="done"
+                onChangeText={(value) => {
+                  setPassword(value);
 
-              if (passwordError) {
-                setPasswordError('');
-              }
-            }}
-          />
+                  if (passwordError) {
+                    setPasswordError('');
+                  }
+                }}
+              />
+            </View>
+            <Button
+              title="Continue"
+              onPress={handleContinue}
+              disabled={formIsComplete}
+              variant="primary"
+            />
 
-          <Button
-            title="Continue"
-            onPress={handleContinue}
-            disabled={formIsComplete}
-            variant="primary"
-          />
-        </View>
+            <View style={styles.dividerContainer}>
+              <View style={styles.dividerLine} />
+              <Text style={styles.dividerText}>or continue with</Text>
+              <View style={styles.dividerLine} />
+            </View>
+
+            <View style={styles.socialButtons}>
+              <Button
+                title="Continue with Google"
+                onPress={handleGoogleSignUp}
+                variant="social"
+                leftIcon={<Google width={20} height={20} />}
+              />
+              <Button
+                title="Continue with Apple"
+                onPress={handleAppleSignUp}
+                variant="social"
+                leftIcon={<Apple width={20} height={20} />}
+              />
+            </View>
+          </View>
+
+          <View style={styles.footer}>
+            <Text style={styles.footerText}>
+              Already have an account?
+            </Text>
+            <Pressable
+              accessibilityRole='button'
+              hitSlop={8}
+              onPress={()=> router.push('/(auth)/sign-in')}
+            >
+              <Text style={styles.footerLink}>Sign in</Text>
+            </Pressable>
+          </View>
+        </ScrollView>
       </KeyboardAvoidingView>
     </SafeAreaView>
   );
@@ -163,17 +217,65 @@ export default function SignUpScreen() {
 const styles = StyleSheet.create({
   safeArea: {
     flex: 1,
+    backgroundColor: colors.other.white,
   },
 
-  container: {
+  keyboardView: {
     flex: 1,
+  },
+
+  content: {
+    flexGrow: 1,
     paddingHorizontal: spacing[4],
     paddingTop: spacing[6],
+    paddingBottom: spacing[4],
+  },
+
+  mainContent: {
+    gap: spacing[6],
   },
 
   form: {
     gap: spacing[4],
-    marginTop: spacing[8],
-    marginBottom: spacing[6],
+  },
+
+  dividerContainer: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: spacing[3],
+  },
+
+  dividerLine: {
+    flex: 1,
+    height: 1,
+    backgroundColor: colors.neutral[100],
+  },
+
+  dividerText: {
+    ...getTypography('bodySmall'),
+    color: colors.neutral[400],
+  },
+
+  socialButtons: {
+    gap: spacing[3],
+  },
+
+  footer: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'center',
+    gap: spacing[1],
+    marginTop: 'auto',
+    paddingTop: spacing[8],
+  },
+
+  footerText: {
+    ...getTypography('bodyMedium'),
+    color: colors.neutral[500],
+  },
+
+  footerLink: {
+    ...getTypography('bodyMedium', 'semiBold'),
+    color: colors.primary[100],
   },
 });
