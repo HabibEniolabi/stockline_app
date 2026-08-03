@@ -92,6 +92,7 @@ export default function WalkthroughScreen() {
                   height: imageHeight,
                 }}
                 resizeMode="contain"
+                accessibilityLabel={`${item.title} illustration`}
               />
               <Text style={styles.title}>{item.title}</Text>
 
@@ -119,6 +120,7 @@ export default function WalkthroughScreen() {
           <Button
             title={'Sign up'}
             variant="primary"
+            fullWidth={false}
             style={styles.actionButton}
             onPress={() => {
               router.push('/(auth)/sign-up');

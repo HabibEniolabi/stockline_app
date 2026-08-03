@@ -1,25 +1,21 @@
-import { View, Text, StyleSheet } from 'react-native';
-import { useEffect } from 'react';
+import { View, StyleSheet } from 'react-native';
 import { router } from 'expo-router';
 
-import StockWave from '../assets/icons/StockWave';
 import { getTypography } from '../theme/typography';
 import { colors } from '../theme/colors';
+import { AnimatedStockWaveLogo } from '../components/branding/AnimatedStockWaveLogo';
 
 export default function Index() {
-  useEffect(() => {
-    const timer = setTimeout(() => {
-      router.replace('/walkthroughScreen');
-    }, 1800);
 
-    return () => clearTimeout(timer);
-  }, []);
+  const handleAnimationFinished = () => {
+    router.replace('/walkthroughScreen');
+  }
   return (
     <View style={styles.container}>
-      <View style={styles.brand}>
-        <StockWave />
-        <Text style={styles.brandName}>StockWave</Text>
-      </View>
+      <AnimatedStockWaveLogo 
+        size={48}
+        onAnimationFinished={handleAnimationFinished}
+      />
     </View>
   );
 }

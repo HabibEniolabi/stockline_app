@@ -11,7 +11,7 @@ import {
 } from 'react-native';
 
 import { colors } from '../../theme/colors';
-import { fontFamily } from '../../theme/typography';
+import { getTypography } from '../../theme/typography';
 
 export type ButtonVariant = 'primary' | 'outline' | 'social';
 
@@ -101,7 +101,7 @@ const styles = StyleSheet.create({
 
   primary: {
     backgroundColor: colors.primary[100],
-    borderWidth: 1,
+    borderWidth: 1.2,
     borderColor: colors.primary[100],
   },
 
@@ -112,7 +112,7 @@ const styles = StyleSheet.create({
 
   outline: {
     backgroundColor: colors.other.white,
-    borderWidth: 1,
+    borderWidth: 1.2,
     borderColor: colors.primary[100],
   },
 
@@ -122,7 +122,7 @@ const styles = StyleSheet.create({
 
   social: {
     backgroundColor: colors.other.white,
-    borderWidth: 1,
+    borderWidth: 1.2,
     borderColor: colors.neutral[200],
   },
 
@@ -135,8 +135,7 @@ const styles = StyleSheet.create({
   },
 
   text: {
-    fontFamily: fontFamily.semiBold,
-    fontSize: 14,
+    ...getTypography('heading6', 'bold'),
     lineHeight: 20,
     textAlign: 'center',
   },
