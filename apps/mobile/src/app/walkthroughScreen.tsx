@@ -29,7 +29,7 @@ type WalkthroughSlide = {
 const slides: WalkthroughSlide[] = [
   {
     id: 'stock-trading',
-    title: 'Stock trading suite',
+    title: 'Stock trading suit',
     image: require('../assets/images/TradeView1.png'),
     description: 'Streamline your investment decisions\nwith expert guidance.',
   },
@@ -44,8 +44,10 @@ const slides: WalkthroughSlide[] = [
 export default function WalkthroughScreen() {
   const { width } = useWindowDimensions();
   const listRef = useRef<FlatList<WalkthroughSlide>>(null);
-
   const [currentIndex, setCurrentIndex] = useState(0);
+
+  const imageWidth = Math.min(width - spacing[8], 340);
+  const imageHeight = imageWidth * (326 / 253); // Maintain the aspect ratio of the image
 
   const handleScrollEnd = (event: NativeSyntheticEvent<NativeScrollEvent>) => {
     const nextIndex = Math.round(event.nativeEvent.contentOffset.x / width);
@@ -53,23 +55,21 @@ export default function WalkthroughScreen() {
     setCurrentIndex(nextIndex);
   };
 
-   const handleSkip = () => {
+  const handleSkip = () => {
     router.replace('/(tabs)/home');
   };
 
   return (
     <SafeAreaView style={styles.container}>
       <View style={styles.header}>
-        <Pressable
-          accessibilityRole="button"
-          hitSlop={12}
-          onPress={handleSkip}
-        >
+        <Pressable accessibilityRole="button" hitSlop={12} onPress={handleSkip}>
           <Text style={styles.skipText}>Skip</Text>
         </Pressable>
       </View>
       <FlatList
         ref={listRef}
+        style={styles.list}
+        contentContainerStyle={styles.listContent}
         data={slides}
         horizontal
         pagingEnabled
@@ -84,33 +84,47 @@ export default function WalkthroughScreen() {
         })}
         renderItem={({ item }) => (
           <View style={[styles.slide, { width }]}>
-            <Image source={item.image} style={styles.image} resizeMode="contain"/>
-            <Text style={styles.title}>{item.title}</Text>
+            <View style={styles.illustrationContainer}>
+              <Image
+                source={item.image}
+                style={{
+                  width: imageWidth,
+                  height: imageHeight,
+                }}
+                resizeMode="contain"
+              />
+              <Text style={styles.title}>{item.title}</Text>
 
-            <Text style={styles.description}>{item.description}</Text>
+              <Text style={styles.description}>{item.description}</Text>
+            </View>
           </View>
         )}
       />
+      <View style={styles.footer}>
+        <WalkthroughProgress
+          currentIndex={currentIndex}
+          total={slides.length}
+        />
 
-      <WalkthroughProgress currentIndex={currentIndex} total={slides.length} />
-      <View style={styles.buttonContainer}>
-        <Button
-          title={'Sign in'}
-          variant="outline"
-          fullWidth={false}
-          style={styles.actionButton}
-          onPress={() => {
-            router.push('/(auth)/sign-in');
-          }}
-        />
-        <Button
-          title={'Sign up'}
-          variant="primary"
-          style={styles.actionButton}
-          onPress={() => {
-            router.push('/(auth)/sign-up');
-          }}
-        />
+        <View style={styles.buttonContainer}>
+          <Button
+            title={'Sign in'}
+            variant="outline"
+            fullWidth={false}
+            style={styles.actionButton}
+            onPress={() => {
+              router.push('/(auth)/sign-in');
+            }}
+          />
+          <Button
+            title={'Sign up'}
+            variant="primary"
+            style={styles.actionButton}
+            onPress={() => {
+              router.push('/(auth)/sign-up');
+            }}
+          />
+        </View>
       </View>
     </SafeAreaView>
   );
@@ -162,56 +176,68 @@ const styles = StyleSheet.create({
     backgroundColor: colors.other.white,
   },
 
-   header: {
+  list: {
+    flex: 1,
+  },
+  
+  listContent: {
+    flexGrow: 1,
+  },
+
+  header: {
     alignItems: 'flex-end',
     paddingHorizontal: spacing[4],
     paddingTop: spacing[2],
   },
 
   skipText: {
-    ...getTypography('bodyMedium', 'semiBold'),
+    ...getTypography('bodyLarge', 'semiBold'),
     color: colors.primary[100],
   },
 
   slide: {
     alignItems: 'center',
-    paddingHorizontal: spacing[2],
-    paddingTop: spacing[10],
+    paddingHorizontal: spacing[4],
   },
 
-  image: {
-    width: 253,
-    height: 326,
+  illustrationContainer: {
+    width: '100%',
+    alignItems: 'center',
+    transform: [{ translateY: 12 }],
   },
 
   title: {
-    ...getTypography('heading2', 'bold'),
+    ...getTypography('heading4', 'bold'),
+    marginTop: spacing[8],
     color: colors.neutral[900],
     textAlign: 'center',
   },
 
   description: {
-    ...getTypography('bodyMedium'),
-    maxWidth: 300,
-    marginTop: spacing[3],
+    ...getTypography('bodyLarge'),
+    maxWidth: 320,
+    marginTop: spacing[4],
     color: colors.neutral[500],
     textAlign: 'center',
   },
 
+  footer: {
+    paddingHorizontal: spacing[4],
+    paddingBottom: spacing[4],
+    gap: spacing[10],
+  },
+
   progressTrack: {
-    position: 'absolute',
-    bottom: spacing[6],
     alignSelf: 'center',
     height: 5,
+    width: 44,
     overflow: 'hidden',
     borderRadius: 999,
     backgroundColor: colors.neutral[50],
   },
 
   progressIndicator: {
-    position: 'absolute',
-    top: 0,
-    bottom: 0,
+    height: '100%',
     borderRadius: 999,
     backgroundColor: colors.primary[100],
   },
@@ -219,9 +245,6 @@ const styles = StyleSheet.create({
   buttonContainer: {
     flexDirection: 'row',
     gap: spacing[3],
-    paddingHorizontal: spacing[4],
-    paddingTop: spacing[6],
-    paddingBottom: spacing[4],
   },
 
   actionButton: {

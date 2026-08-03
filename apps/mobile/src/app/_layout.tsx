@@ -13,7 +13,7 @@ const Layout = () => {
           }}
         />
          <Stack.Screen
-          name="onboarding"
+          name="walkthroughScreen"
           options={{
             animation: 'fade',
           }}

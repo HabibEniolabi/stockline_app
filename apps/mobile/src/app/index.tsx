@@ -3,13 +3,13 @@ import { useEffect } from 'react';
 import { router } from 'expo-router';
 
 import StockWave from '../assets/icons/StockWave';
-import { getTypography, typography } from '../theme/typography';
+import { getTypography } from '../theme/typography';
 import { colors } from '../theme/colors';
 
 export default function Index() {
   useEffect(() => {
     const timer = setTimeout(() => {
-      router.replace('/onboarding');
+      router.replace('/walkthroughScreen');
     }, 1800);
 
     return () => clearTimeout(timer);
@@ -18,14 +18,7 @@ export default function Index() {
     <View style={styles.container}>
       <View style={styles.brand}>
         <StockWave />
-        <Text
-          style={[
-            getTypography('bodyMedium'),
-            styles.brandName,
-          ]}
-        >
-          StockWave
-        </Text>
+        <Text style={styles.brandName}>StockWave</Text>
       </View>
     </View>
   );
@@ -44,7 +37,7 @@ const styles = StyleSheet.create({
     gap: 12,
   },
   brandName: {
-    ...typography.heading2,
+    ...getTypography('heading2', 'bold'),
     color: colors.neutral[900],
   },
 });
