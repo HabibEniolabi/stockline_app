@@ -11,7 +11,7 @@ import { colors } from '../../theme/colors';
 
 const stockPlaceholder = require('../../assets/images/stock-placeholder.png');
 
-type StockLogoProps = {
+type CompaniesStocksLogoProps = {
   logoUrl?: string | null;
   symbol?: string;
   companyName?: string;
@@ -21,7 +21,7 @@ type StockLogoProps = {
   style?: StyleProp<ViewStyle>;
 };
 
-export function StockLogo({
+export function CompaniesStocksLogo({
   logoUrl,
   symbol,
   companyName,
@@ -29,7 +29,7 @@ export function StockLogo({
   borderRadius = size / 2,
   padding = 8,
   style,
-}: StockLogoProps) {
+}: CompaniesStocksLogoProps) {
   const [hasImageError, setHasImageError] = useState(false);
 
   useEffect(() => {

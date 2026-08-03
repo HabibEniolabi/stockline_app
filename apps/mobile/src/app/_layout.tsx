@@ -40,6 +40,18 @@ const Layout = () => {
             animation: 'fade',
           }}
         />
+         <Stack.Screen
+          name="(auth)/sign-in"
+          options={{
+            animation: 'fade',
+          }}
+        />
+         <Stack.Screen
+          name="(auth)/sign-up"
+          options={{
+            animation: 'fade',
+          }}
+        />
       </Stack>
     </>
   );
