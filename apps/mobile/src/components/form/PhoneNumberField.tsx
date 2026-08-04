@@ -1,6 +1,4 @@
-import { useState } from 'react';
 import {
-  Pressable,
   StyleSheet,
   Text,
   View,
@@ -8,32 +6,30 @@ import {
   type ViewStyle,
 } from 'react-native';
 
-import { AppIcon } from '../icons/AppIcon';
-import { TextField } from './TextField';
 import { colors } from '../../theme/colors';
+import { fontFamily } from '../../theme/typography';
+import { CountryPicker } from './CountryPicker';
+import type { Country } from '../../components/types/countries';
+import { TextField } from './TextField';
 
 type PhoneNumberFieldProps = {
   value: string;
-  onChangeText: (value: string) => void;
+  country: Country;
   error?: string;
   containerStyle?: StyleProp<ViewStyle>;
+  onChangeText: (value: string) => void;
+  onCountryChange: (country: Country) => void;
 };
 
 export function PhoneNumberField({
   value,
-  onChangeText,
+  country,
   error,
   containerStyle,
+  onChangeText,
+  onCountryChange,
 }: PhoneNumberFieldProps) {
-  const [countryCode] = useState('+1');
-
-  const handleCountryPress = () => {
-    // Open your country-selection modal later.
-    console.log('Open country selector');
-  };
-
   const handlePhoneChange = (text: string) => {
-    // Allow only numbers.
     const numbersOnly = text.replace(/\D/g, '');
 
     onChangeText(numbersOnly);
@@ -44,7 +40,7 @@ export function PhoneNumberField({
       value={value}
       error={error}
       containerStyle={containerStyle}
-      placeholder={`${countryCode}-000-000-0000`}
+      placeholder="000-000-0000"
       keyboardType="phone-pad"
       textContentType="telephoneNumber"
       autoComplete="tel"
@@ -53,26 +49,16 @@ export function PhoneNumberField({
       onChangeText={handlePhoneChange}
       leftElement={
         <View style={styles.leftElement}>
-          <Pressable
-            accessibilityRole="button"
-            accessibilityLabel="Select country"
-            hitSlop={8}
-            style={({ pressed }) => [
-              styles.countryButton,
-              pressed && styles.countryButtonPressed,
-            ]}
-            onPress={handleCountryPress}
-          >
-            <Text style={styles.flag}>🇺🇸</Text>
-
-            <AppIcon
-              name="chevronDown"
-              size={16}
-              color={colors.neutral[700]}
-            />
-          </Pressable>
+          <CountryPicker
+            selectedCountry={country}
+            onSelectCountry={onCountryChange}
+          />
 
           <View style={styles.divider} />
+
+          <Text style={styles.dialCode}>
+            {country.dialCode}
+          </Text>
         </View>
       }
     />
@@ -87,23 +73,15 @@ const styles = StyleSheet.create({
     gap: 10,
   },
 
-  countryButton: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    gap: 4,
-  },
-
-  countryButtonPressed: {
-    opacity: 0.6,
-  },
-
-  flag: {
-    fontSize: 20,
-  },
-
   divider: {
     width: 1,
     height: 24,
     backgroundColor: colors.neutral[100],
+  },
+
+  dialCode: {
+    fontFamily: fontFamily.regular,
+    fontSize: 14,
+    color: colors.neutral[500],
   },
 });

@@ -13,12 +13,43 @@ import AuthHeader from '../../components/common/AuthHeader';
 import { colors } from '../../theme/colors';
 import { spacing } from '../../theme/spacing';
 import { Button } from '../../components/ui/Button';
+import { useState } from 'react';
 
-const handleSendCode = () => {
-  router.push('/(auth)/verification-two');
-}
+import { countries } from '../../components/types/countries';
+import { PhoneNumberField } from '../../components/form/PhoneNumberField';
 
 export default function PhoneNumberScreen() {
+  const [country, setCountry] = useState(
+    countries.find((item) => item.iso2 === 'US') ?? countries[0],
+  );
+
+  const [phoneNumber, setPhoneNumber] = useState('');
+  const [phoneError, setPhoneError] = useState('');
+
+  const handleSendCode = () => {
+    setPhoneError('');
+
+    if (!phoneNumber) {
+      setPhoneError('Phone number is required.');
+      return;
+    }
+
+    if (phoneNumber.length < 7) {
+      setPhoneError('Enter a valid phone number.');
+      return;
+    }
+
+    const internationalPhoneNumber = `${country.dialCode}${phoneNumber}`;
+
+    console.log({
+      country: country.name,
+      countryCode: country.iso2,
+      dialCode: country.dialCode,
+      phoneNumber: internationalPhoneNumber,
+    });
+
+    router.push('/(auth)/OtpVerificationScreen');
+  };
   return (
     <SafeAreaView style={styles.safeArea}>
       <KeyboardAvoidingView
@@ -45,9 +76,29 @@ export default function PhoneNumberScreen() {
             />
           </View>
 
-          {/* Phone-number field and Continue button */}
+          <PhoneNumberField
+            country={country}
+            value={phoneNumber}
+            error={phoneError}
+            onCountryChange={(selectedCountry) => {
+              setCountry(selectedCountry);
+              setPhoneNumber('');
+              setPhoneError('');
+            }}
+            onChangeText={(value) => {
+              setPhoneNumber(value);
+
+              if (phoneError) {
+                setPhoneError('');
+              }
+            }}
+          />
           <View style={styles.footer}>
-            <Button title={'Send code'} onPress={handleSendCode} variant='primary' />
+            <Button
+              title={'Send code'}
+              onPress={handleSendCode}
+              variant="primary"
+            />
           </View>
         </ScrollView>
       </KeyboardAvoidingView>

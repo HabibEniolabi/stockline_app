@@ -16,6 +16,7 @@ export type AppIconName =
   | 'add'
   | 'chevronRight'
   | 'chevronLeft'
+  | 'chevronDown'
   | 'search'
   | 'settings'
   | 'close'
@@ -74,6 +75,9 @@ const icons: Record<
   },
   chevronRight: {
     default: 'chevron-forward',
+  },
+  chevronDown: {
+    default: 'chevron-down',
   },
   chevronLeft: {
     default: 'chevron-back',
