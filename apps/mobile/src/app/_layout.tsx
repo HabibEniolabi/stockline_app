@@ -29,11 +29,6 @@ const Layout = () => {
     }
 
     if (fontsLoaded) {
-      console.log(
-        'Inter-Bold loaded:',
-        Font.isLoaded('Inter-Bold'),
-      );
-
       SplashScreen.hideAsync();
     }
   }, [fontsLoaded, fontError]);

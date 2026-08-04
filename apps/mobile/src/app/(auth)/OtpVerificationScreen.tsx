@@ -12,70 +12,79 @@ import {
 import { SafeAreaView } from 'react-native-safe-area-context';
 
 import AuthHeader from '../../components/common/AuthHeader';
-import { OtpInput } from '../../components/form/OtpInput';
+import { OtpInput, type OtpStatus } from '../../components/form/OtpInput';
+import { OtpPreviewModal } from '../../components/ui/OtpPreviewModal';
 import { BackButton } from '../../components/ui/BackButton';
 import { Button } from '../../components/ui/Button';
 import { colors } from '../../theme/colors';
 import { spacing } from '../../theme/spacing';
 import { getTypography } from '../../theme/typography';
-import { OtpPreviewModal } from '../../components/ui/OtpPreviewModal';
 
 const OTP_LENGTH = 6;
+const OTP_PREVIEW_DURATION = 6000;
 
-export default function VerificationTwoScreen() {
+export default function OtpVerificationScreen() {
   const [verificationCode, setVerificationCode] = useState('');
-  const [error, setError] = useState('');
   const [generatedOtp, setGeneratedOtp] = useState('');
+  const [error, setError] = useState('');
   const [otpModalVisible, setOtpModalVisible] = useState(false);
 
-  const generateOtp = () => {
-    const minimum = 10 ** (OTP_LENGTH - 1);
-    const maximum = 10 ** (OTP_LENGTH - 1);
-
-    const otp = Math.floor(
-      minimum + Math.random() * (minimum - maximum),
-    ).toString();
-
-    setGeneratedOtp(otp);
-    setOtpModalVisible(true);
-  };
+  const [otpStatus, setOtpStatus] = useState<OtpStatus>('default');
+  const [shakeTrigger, setShakeTrigger] = useState(0)
 
   useEffect(() => {
-    generateOtp();
+    // Opening the modal generates a new random OTP.
+    setOtpModalVisible(true);
   }, []);
-
-  const handleVerifyCode = () => {
-    setError('');
-
-    if (verificationCode.length !== OTP_LENGTH) {
-      setError('Enter the 6-digit verification code.');
-      return;
-    }
-
-    if (verificationCode !== generatedOtp) {
-      setError('The verification code is incorrect.');
-      return;
-    }
-    // Replace this with your verification API request later.
-    router.replace('/(tabs)/home');
-  };
 
   const handleCodeChange = (value: string) => {
     setVerificationCode(value);
+
+    if(otpStatus !== "default") {
+      setOtpStatus("default");
+    }
 
     if (error) {
       setError('');
     }
   };
 
-  const handleResendCode = () => {
-    setVerificationCode('');
+  const handleVerifyCode = () => {
     setError('');
 
-    console.log('Resend verification code');
+    if (verificationCode.length !== OTP_LENGTH) {
+    setOtpStatus('error');
+    setShakeTrigger((current) => current + 1);
+    setError(`Enter the ${OTP_LENGTH}-digit verification code.`);
+    return;
+  }
+
+  if (verificationCode !== generatedOtp) {
+    setOtpStatus('error');
+    setShakeTrigger((current) => current + 1);
+    setError('The verification code is incorrect.');
+    return;
+  }
+
+  setOtpStatus('success');
+
+  // Briefly show the green success state.
+  setTimeout(() => {
+    router.replace('/(tabs)/home');
+  }, 700);
   };
 
-  const codeIsIncomplete = verificationCode.length !== OTP_LENGTH;
+  const handleResendCode = () => {
+    setVerificationCode('');
+    setGeneratedOtp('');
+    setError('');
+
+    setOtpStatus("default")
+    setOtpModalVisible(true);
+  };
+
+  const codeIsIncomplete =
+    verificationCode.length !== OTP_LENGTH;
 
   return (
     <SafeAreaView style={styles.safeArea}>
@@ -103,10 +112,16 @@ export default function VerificationTwoScreen() {
                 value={verificationCode}
                 onChangeText={handleCodeChange}
                 length={OTP_LENGTH}
+                status={otpStatus}
+                shakeTrigger={shakeTrigger}
                 autoFocus
               />
 
-              {error ? <Text style={styles.errorText}>{error}</Text> : null}
+              {error ? (
+                <Text style={styles.errorText}>
+                  {error}
+                </Text>
+              ) : null}
 
               <View style={styles.resendContainer}>
                 <Text style={styles.resendQuestion}>
@@ -115,10 +130,13 @@ export default function VerificationTwoScreen() {
 
                 <Pressable
                   accessibilityRole="button"
+                  accessibilityLabel="Resend verification code"
                   hitSlop={8}
                   onPress={handleResendCode}
                 >
-                  <Text style={styles.resendText}>Resend code</Text>
+                  <Text style={styles.resendText}>
+                    Resend code
+                  </Text>
                 </Pressable>
               </View>
             </View>
@@ -134,11 +152,17 @@ export default function VerificationTwoScreen() {
           </View>
         </ScrollView>
       </KeyboardAvoidingView>
+
       <OtpPreviewModal
         visible={otpModalVisible}
-        code={generatedOtp}
-        onClose={() => setOtpModalVisible(false)}
-        duration={6000}
+        length={OTP_LENGTH}
+        duration={OTP_PREVIEW_DURATION}
+        onCodeGenerated={(code) => {
+          setGeneratedOtp(code);
+        }}
+        onClose={() => {
+          setOtpModalVisible(false);
+        }}
       />
     </SafeAreaView>
   );
@@ -173,6 +197,7 @@ const styles = StyleSheet.create({
     ...getTypography('bodySmall'),
     marginTop: spacing[2],
     color: colors.error.base,
+    textAlign: 'center',
   },
 
   resendContainer: {

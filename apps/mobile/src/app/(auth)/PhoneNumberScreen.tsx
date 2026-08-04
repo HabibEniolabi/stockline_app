@@ -92,16 +92,15 @@ export default function PhoneNumberScreen() {
               }}
             />
           </View>
-
-          <View style={styles.footer}>
+        </ScrollView>
+      </KeyboardAvoidingView>
+      <View style={styles.footer}>
             <Button
               title={'Send code'}
               onPress={handleSendCode}
               variant="primary"
             />
           </View>
-        </ScrollView>
-      </KeyboardAvoidingView>
     </SafeAreaView>
   );
 }
@@ -125,6 +124,7 @@ const styles = StyleSheet.create({
 
   headerContainer: {
     marginTop: spacing[12],
+    gap: spacing[8],
   },
 
   footer: {

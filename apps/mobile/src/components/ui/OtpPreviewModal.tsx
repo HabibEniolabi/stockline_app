@@ -1,4 +1,4 @@
-import { useEffect, useRef } from 'react';
+import { useRef, useState } from 'react';
 import {
   Animated,
   Modal,
@@ -14,42 +14,58 @@ import { getTypography } from '../../theme/typography';
 
 type OtpPreviewModalProps = {
   visible: boolean;
-  code: string;
+  length?: number;
   duration?: number;
   onClose: () => void;
+  onCodeGenerated: (code: string) => void;
+};
+
+const generateOtp = (length: number): string => {
+  const minimum = 10 ** (length - 1);
+  const maximum = 10 ** length - 1;
+
+  return Math.floor(
+    minimum + Math.random() * (maximum - minimum + 1),
+  ).toString();
 };
 
 export function OtpPreviewModal({
   visible,
-  code,
+  length = 6,
   duration = 6000,
   onClose,
+  onCodeGenerated,
 }: OtpPreviewModalProps) {
-  const progress = useRef(new Animated.Value(1)).current;
+  const [code, setCode] = useState('');
 
-  useEffect(() => {
-    if (!visible) {
-      return;
-    }
+  const progress = useRef(
+    new Animated.Value(1),
+  ).current;
 
+  const handleModalShow = () => {
+    const newCode = generateOtp(length);
+
+    setCode(newCode);
+    onCodeGenerated(newCode);
+
+    progress.stopAnimation();
     progress.setValue(1);
 
-    const animation = Animated.timing(progress, {
+    Animated.timing(progress, {
       toValue: 0,
       duration,
       useNativeDriver: false,
-    });
-
-    animation.start(({ finished }) => {
+    }).start(({ finished }) => {
       if (finished) {
         onClose();
       }
     });
+  };
 
-    return () => {
-      animation.stop();
-    };
-  }, [duration, onClose, progress, visible]);
+  const handleClose = () => {
+    progress.stopAnimation();
+    onClose();
+  };
 
   const progressWidth = progress.interpolate({
     inputRange: [0, 1],
@@ -62,12 +78,13 @@ export function OtpPreviewModal({
       visible={visible}
       animationType="fade"
       statusBarTranslucent
-      onRequestClose={onClose}
+      onShow={handleModalShow}
+      onRequestClose={handleClose}
     >
       <View style={styles.overlay}>
         <Pressable
           style={StyleSheet.absoluteFill}
-          onPress={onClose}
+          onPress={handleClose}
         />
 
         <View style={styles.modal}>

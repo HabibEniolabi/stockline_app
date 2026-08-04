@@ -16,7 +16,6 @@ const AuthHeader = ({icon, title, description}: AppHeaderProps) => {
       {icon ? <View style={styles.icon}>{icon}</View> : null}
       <View style={styles.textContainer}>
         <Text style={styles.title}>{title}</Text> 
-        {/* {/* <Text style={{fontFamily: 'Inter-Bold', fontSize: 20}}>{title}</Text> */}
         <Text style={styles.description}>{description}</Text>
       </View>
     </View>
@@ -41,16 +40,12 @@ const styles = StyleSheet.create({
   },
 
   title: {
-    fontFamily: 'Inter-Bold',
-    fontSize: 32,
-    lineHeight: 40,
+    ...getTypography('heading4', 'bold'),
     color: colors.neutral[900],
   },
 
   description: {
-    fontFamily: 'Inter-Regular',
-    fontSize: 14,
-    lineHeight: 20,
+    ...getTypography('bodyLarge', 'regular'),
     color: colors.neutral[500],
   },
 })
