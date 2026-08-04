@@ -79,7 +79,7 @@ const T = {
   lockupAt: 820,
   lockupIn: 520,
   wordmarkFade: 320,
-  hold: 380,
+  hold: 900,
 };
 
 const TOTAL = T.lockupAt + T.lockupIn + T.hold;

@@ -19,6 +19,7 @@ import { Button } from '../../components/ui/Button';
 import { getTypography } from '../../theme/typography';
 import Apple from '../../assets/icons/Apple';
 import Google from '../../assets/icons/Google';
+import { SocialSignIn } from '../../components/ui/SocianSignin';
 
 export default function SignUpScreen() {
   const [email, setEmail] = useState('');
@@ -108,12 +109,14 @@ export default function SignUpScreen() {
             <AuthHeader
               icon={<StockWave width={32} height={32} />}
               title="Join StockWave!"
-              description="Embark on your investment journey with a\nsingle dollar."
+              description={
+                'Embark on your investment journey with a\nsingle dollar.'
+              }
             />
 
             <View style={styles.form}>
               <TextField
-                placeholder="Enter your username"
+                placeholder="Username"
                 value={username}
                 error={usernameError}
                 autoCapitalize="none"
@@ -148,7 +151,7 @@ export default function SignUpScreen() {
                 }}
               />
               <TextField
-                placeholder="Enter your password"
+                placeholder="Password"
                 value={password}
                 error={passwordError}
                 secureTextEntry
@@ -174,36 +177,18 @@ export default function SignUpScreen() {
               variant="primary"
             />
 
-            <View style={styles.dividerContainer}>
-              <View style={styles.dividerLine} />
-              <Text style={styles.dividerText}>or continue with</Text>
-              <View style={styles.dividerLine} />
-            </View>
-
-            <View style={styles.socialButtons}>
-              <Button
-                title="Continue with Google"
-                onPress={handleGoogleSignUp}
-                variant="social"
-                leftIcon={<Google width={20} height={20} />}
-              />
-              <Button
-                title="Continue with Apple"
-                onPress={handleAppleSignUp}
-                variant="social"
-                leftIcon={<Apple width={20} height={20} />}
-              />
-            </View>
+            <SocialSignIn
+              onGooglePress={handleGoogleSignUp}
+              onApplePress={handleAppleSignUp}
+            />
           </View>
 
           <View style={styles.footer}>
-            <Text style={styles.footerText}>
-              Already have an account?
-            </Text>
+            <Text style={styles.footerText}>Already have an account?</Text>
             <Pressable
-              accessibilityRole='button'
+              accessibilityRole="button"
               hitSlop={8}
-              onPress={()=> router.push('/(auth)/sign-in')}
+              onPress={() => router.push('/(auth)/sign-in')}
             >
               <Text style={styles.footerLink}>Sign in</Text>
             </Pressable>
@@ -227,12 +212,13 @@ const styles = StyleSheet.create({
   content: {
     flexGrow: 1,
     paddingHorizontal: spacing[4],
-    paddingTop: spacing[6],
+    paddingTop: spacing[8],
     paddingBottom: spacing[4],
   },
 
   mainContent: {
-    gap: spacing[6],
+    gap: spacing[10],
+    marginTop: spacing[12],
   },
 
   form: {
@@ -252,7 +238,7 @@ const styles = StyleSheet.create({
   },
 
   dividerText: {
-    ...getTypography('bodySmall'),
+    ...getTypography('bodyLarge'),
     color: colors.neutral[400],
   },
 

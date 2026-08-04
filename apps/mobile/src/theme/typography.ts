@@ -65,7 +65,7 @@ export const typography = {
     fontSize: 10,
     lineHeight: 15,
   },
-} as const;
+} satisfies Record<string, TextStyle>;
 
 export type TypographyVariant = keyof typeof typography;
 export type TypographyWeight = keyof typeof fontFamily;

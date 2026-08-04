@@ -85,7 +85,7 @@ export function Button({
 
 const styles = StyleSheet.create({
   base: {
-    height: 48,
+    height: 56,
     minWidth: 96,
     borderRadius: 14,
     paddingHorizontal: 20,
@@ -135,7 +135,7 @@ const styles = StyleSheet.create({
   },
 
   text: {
-    ...getTypography('heading6', 'bold'),
+    ...getTypography('heading6', 'semiBold'),
     lineHeight: 20,
     textAlign: 'center',
   },

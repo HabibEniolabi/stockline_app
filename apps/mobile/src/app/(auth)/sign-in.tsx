@@ -20,6 +20,7 @@ import { spacing } from '../../theme/spacing';
 import { getTypography } from '../../theme/typography';
 import Apple from '../../assets/icons/Apple';
 import Google from '../../assets/icons/Google';
+import { SocialSignIn } from '../../components/ui/SocianSignin';
 
 export default function SignInScreen() {
   const [email, setEmail] = useState('');
@@ -87,14 +88,13 @@ export default function SignInScreen() {
           <View style={styles.mainContent}>
             <AuthHeader
               icon={<StockWave width={32} height={32} />}
-              title="Welcome back!"
+              title="Hey there!👋"
               description="Sign in to continue your investment journey."
             />
 
             <View style={styles.form}>
               <TextField
-                label="Email address"
-                placeholder="Enter your email address"
+                placeholder="Email"
                 value={email}
                 error={emailError}
                 keyboardType="email-address"
@@ -114,8 +114,7 @@ export default function SignInScreen() {
 
               <View>
                 <TextField
-                  label="Password"
-                  placeholder="Enter your password"
+                  placeholder="Password"
                   value={password}
                   error={passwordError}
                   secureTextEntry
@@ -133,19 +132,6 @@ export default function SignInScreen() {
                     }
                   }}
                 />
-
-                <Pressable
-                  accessibilityRole="button"
-                  hitSlop={8}
-                  style={styles.forgotPasswordButton}
-                  onPress={() => {
-                    router.push('/(auth)/forgot-password');
-                  }}
-                >
-                  <Text style={styles.forgotPasswordText}>
-                    Forgot password?
-                  </Text>
-                </Pressable>
               </View>
             </View>
 
@@ -156,39 +142,25 @@ export default function SignInScreen() {
               onPress={handleSignIn}
             />
 
-            <View style={styles.dividerContainer}>
-              <View style={styles.divider} />
+            <Pressable
+              accessibilityRole="button"
+              hitSlop={8}
+              style={styles.forgotPasswordButton}
+              onPress={() => {
+                router.push('/(auth)/forgot-password');
+              }}
+            >
+              <Text style={styles.forgotPasswordText}>Forgot password?</Text>
+            </Pressable>
 
-              <Text style={styles.dividerText}>
-                Or continue with
-              </Text>
-
-              <View style={styles.divider} />
-            </View>
-
-            <View style={styles.socialButtons}>
-              <Button
-                title="Continue with Google"
-                variant="outline"
-                onPress={handleGoogleSignIn}
-                leftIcon={<Google width={20} height={20} />}
-              />
-
-              {Platform.OS === 'ios' ? (
-                <Button
-                  title="Continue with Apple"
-                  variant="outline"
-                  onPress={handleAppleSignIn}
-                  leftIcon={<Apple width={20} height={20} />}
-                />
-              ) : null}
-            </View>
+            <SocialSignIn
+              onGooglePress={handleGoogleSignIn}
+              onApplePress={handleAppleSignIn}
+            />
           </View>
 
           <View style={styles.footer}>
-            <Text style={styles.footerText}>
-              Don&apos;t have an account?
-            </Text>
+            <Text style={styles.footerText}>Don&apos;t have an account?</Text>
 
             <Pressable
               accessibilityRole="button"
@@ -225,6 +197,7 @@ const styles = StyleSheet.create({
 
   mainContent: {
     gap: spacing[6],
+    marginTop: spacing[10],
   },
 
   form: {
