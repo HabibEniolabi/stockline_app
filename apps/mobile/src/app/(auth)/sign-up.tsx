@@ -82,7 +82,7 @@ export default function SignUpScreen() {
       password,
     });
 
-    router.push('/');
+    router.push('/(auth)/verification-one');
   };
 
   const handleGoogleSignUp = () => {

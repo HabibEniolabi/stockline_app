@@ -73,6 +73,18 @@ const Layout = () => {
             animation: 'fade',
           }}
         />
+         <Stack.Screen
+          name="(auth)/PhoneNumberScreen"
+          options={{
+            animation: 'fade',
+          }}
+        />
+         <Stack.Screen
+          name="(auth)/OtpVerificationScreen"
+          options={{
+            animation: 'fade',
+          }}
+        />
       </Stack>
     </>
   );
