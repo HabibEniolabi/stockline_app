@@ -71,28 +71,28 @@ export default function PhoneNumberScreen() {
             <AuthHeader
               title="Enter your phone number"
               description={
-                "You'll receive a 4 digit code for the\nphone number verification"
+                "You'll receive a 5 digit code for the\nphone number verification"
               }
+            />
+            <PhoneNumberField
+              country={country}
+              value={phoneNumber}
+              error={phoneError}
+              onCountryChange={(selectedCountry) => {
+                setCountry(selectedCountry);
+                setPhoneNumber('');
+                setPhoneError('');
+              }}
+              onChangeText={(value) => {
+                setPhoneNumber(value);
+
+                if (phoneError) {
+                  setPhoneError('');
+                }
+              }}
             />
           </View>
 
-          <PhoneNumberField
-            country={country}
-            value={phoneNumber}
-            error={phoneError}
-            onCountryChange={(selectedCountry) => {
-              setCountry(selectedCountry);
-              setPhoneNumber('');
-              setPhoneError('');
-            }}
-            onChangeText={(value) => {
-              setPhoneNumber(value);
-
-              if (phoneError) {
-                setPhoneError('');
-              }
-            }}
-          />
           <View style={styles.footer}>
             <Button
               title={'Send code'}

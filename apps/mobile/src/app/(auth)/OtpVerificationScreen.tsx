@@ -1,24 +1,64 @@
 import { router } from 'expo-router';
+import { useState } from 'react';
 import {
   KeyboardAvoidingView,
   Platform,
+  Pressable,
   ScrollView,
   StyleSheet,
+  Text,
   View,
 } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 
-import { BackButton } from '../../components/ui/BackButton';
 import AuthHeader from '../../components/common/AuthHeader';
+import { OtpInput } from '../../components/form/OtpInput';
+import { BackButton } from '../../components/ui/BackButton';
+import { Button } from '../../components/ui/Button';
 import { colors } from '../../theme/colors';
 import { spacing } from '../../theme/spacing';
-import { Button } from '../../components/ui/Button';
+import { getTypography } from '../../theme/typography';
 
-const handleVerifyCode = () => {
-  router.push('/');
-};
+const OTP_LENGTH = 5;
 
 export default function VerificationTwoScreen() {
+  const [verificationCode, setVerificationCode] = useState('');
+  const [error, setError] = useState('');
+
+  const handleVerifyCode = () => {
+    setError('');
+
+    if (verificationCode.length !== OTP_LENGTH) {
+      setError(`Enter the ${OTP_LENGTH}-digit verification code.`);
+      return;
+    }
+
+    console.log({
+      verificationCode,
+    });
+
+    // Replace this with your verification API request later.
+    router.replace('/(tabs)/home');
+  };
+
+  const handleCodeChange = (value: string) => {
+    setVerificationCode(value);
+
+    if (error) {
+      setError('');
+    }
+  };
+
+  const handleResendCode = () => {
+    setVerificationCode('');
+    setError('');
+
+    console.log('Resend verification code');
+  };
+
+  const codeIsIncomplete =
+    verificationCode.length !== OTP_LENGTH;
+
   return (
     <SafeAreaView style={styles.safeArea}>
       <KeyboardAvoidingView
@@ -30,27 +70,54 @@ export default function VerificationTwoScreen() {
           keyboardShouldPersistTaps="handled"
           showsVerticalScrollIndicator={false}
         >
-          <BackButton
-            onPress={() => {
-              router.back();
-            }}
-          />
+          <BackButton onPress={() => router.back()} />
 
-          <View style={styles.headerContainer}>
+          <View style={styles.mainContent}>
             <AuthHeader
-              title="Enter your phone number"
+              title="Enter verification code"
               description={
-                "You'll receive a 4 digit code for the\nphone number verification"
+                'We have sent the verification code to your\nmobile number'
               }
             />
+
+            <View style={styles.otpSection}>
+              <OtpInput
+                value={verificationCode}
+                onChangeText={handleCodeChange}
+                length={OTP_LENGTH}
+                autoFocus
+              />
+
+              {error ? (
+                <Text style={styles.errorText}>
+                  {error}
+                </Text>
+              ) : null}
+
+              <View style={styles.resendContainer}>
+                <Text style={styles.resendQuestion}>
+                  Didn&apos;t receive the code?
+                </Text>
+
+                <Pressable
+                  accessibilityRole="button"
+                  hitSlop={8}
+                  onPress={handleResendCode}
+                >
+                  <Text style={styles.resendText}>
+                    Resend code
+                  </Text>
+                </Pressable>
+              </View>
+            </View>
           </View>
 
-          {/* Phone-number field and Continue button */}
           <View style={styles.footer}>
             <Button
-              title={'Verify account'}
-              onPress={handleVerifyCode}
+              title="Verify account"
               variant="primary"
+              disabled={codeIsIncomplete}
+              onPress={handleVerifyCode}
             />
           </View>
         </ScrollView>
@@ -76,13 +143,40 @@ const styles = StyleSheet.create({
     paddingBottom: spacing[4],
   },
 
-  headerContainer: {
+  mainContent: {
     marginTop: spacing[12],
   },
 
+  otpSection: {
+    marginTop: spacing[8],
+  },
+
+  errorText: {
+    ...getTypography('bodySmall'),
+    marginTop: spacing[2],
+    color: colors.error.base,
+  },
+
+  resendContainer: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'center',
+    gap: spacing[1],
+    marginTop: spacing[6],
+  },
+
+  resendQuestion: {
+    ...getTypography('bodyMedium'),
+    color: colors.neutral[500],
+  },
+
+  resendText: {
+    ...getTypography('bodyMedium', 'semiBold'),
+    color: colors.primary[100],
+  },
+
   footer: {
-    paddingHorizontal: spacing[4],
-    paddingBottom: spacing[4],
-    gap: spacing[10],
+    marginTop: 'auto',
+    paddingTop: spacing[8],
   },
 });
