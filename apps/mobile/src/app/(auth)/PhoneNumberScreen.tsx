@@ -71,7 +71,7 @@ export default function PhoneNumberScreen() {
             <AuthHeader
               title="Enter your phone number"
               description={
-                "You'll receive a 5 digit code for the\nphone number verification"
+                "You'll receive a 6 digit code for the\nphone number verification"
               }
             />
             <PhoneNumberField

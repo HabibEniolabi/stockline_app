@@ -1,5 +1,5 @@
 import { router } from 'expo-router';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import {
   KeyboardAvoidingView,
   Platform,
@@ -18,25 +18,44 @@ import { Button } from '../../components/ui/Button';
 import { colors } from '../../theme/colors';
 import { spacing } from '../../theme/spacing';
 import { getTypography } from '../../theme/typography';
+import { OtpPreviewModal } from '../../components/ui/OtpPreviewModal';
 
-const OTP_LENGTH = 5;
+const OTP_LENGTH = 6;
 
 export default function VerificationTwoScreen() {
   const [verificationCode, setVerificationCode] = useState('');
   const [error, setError] = useState('');
+  const [generatedOtp, setGeneratedOtp] = useState('');
+  const [otpModalVisible, setOtpModalVisible] = useState(false);
+
+  const generateOtp = () => {
+    const minimum = 10 ** (OTP_LENGTH - 1);
+    const maximum = 10 ** (OTP_LENGTH - 1);
+
+    const otp = Math.floor(
+      minimum + Math.random() * (minimum - maximum),
+    ).toString();
+
+    setGeneratedOtp(otp);
+    setOtpModalVisible(true);
+  };
+
+  useEffect(() => {
+    generateOtp();
+  }, []);
 
   const handleVerifyCode = () => {
     setError('');
 
     if (verificationCode.length !== OTP_LENGTH) {
-      setError(`Enter the ${OTP_LENGTH}-digit verification code.`);
+      setError('Enter the 6-digit verification code.');
       return;
     }
 
-    console.log({
-      verificationCode,
-    });
-
+    if (verificationCode !== generatedOtp) {
+      setError('The verification code is incorrect.');
+      return;
+    }
     // Replace this with your verification API request later.
     router.replace('/(tabs)/home');
   };
@@ -56,8 +75,7 @@ export default function VerificationTwoScreen() {
     console.log('Resend verification code');
   };
 
-  const codeIsIncomplete =
-    verificationCode.length !== OTP_LENGTH;
+  const codeIsIncomplete = verificationCode.length !== OTP_LENGTH;
 
   return (
     <SafeAreaView style={styles.safeArea}>
@@ -88,11 +106,7 @@ export default function VerificationTwoScreen() {
                 autoFocus
               />
 
-              {error ? (
-                <Text style={styles.errorText}>
-                  {error}
-                </Text>
-              ) : null}
+              {error ? <Text style={styles.errorText}>{error}</Text> : null}
 
               <View style={styles.resendContainer}>
                 <Text style={styles.resendQuestion}>
@@ -104,9 +118,7 @@ export default function VerificationTwoScreen() {
                   hitSlop={8}
                   onPress={handleResendCode}
                 >
-                  <Text style={styles.resendText}>
-                    Resend code
-                  </Text>
+                  <Text style={styles.resendText}>Resend code</Text>
                 </Pressable>
               </View>
             </View>
@@ -122,6 +134,12 @@ export default function VerificationTwoScreen() {
           </View>
         </ScrollView>
       </KeyboardAvoidingView>
+      <OtpPreviewModal
+        visible={otpModalVisible}
+        code={generatedOtp}
+        onClose={() => setOtpModalVisible(false)}
+        duration={6000}
+      />
     </SafeAreaView>
   );
 }

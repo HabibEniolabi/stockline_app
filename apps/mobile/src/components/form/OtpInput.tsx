@@ -62,6 +62,7 @@ export function OtpInput({
         maxLength={length}
         textContentType="oneTimeCode"
         autoComplete="sms-otp"
+        importantForAutofill="yes"
         caretHidden
         style={styles.hiddenInput}
         onChangeText={handleChangeText}
