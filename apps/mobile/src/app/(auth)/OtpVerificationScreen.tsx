@@ -70,7 +70,7 @@ export default function OtpVerificationScreen() {
 
   // Briefly show the green success state.
   setTimeout(() => {
-    router.replace('/(tabs)/home');
+    router.replace('/(auth)/OtpVerificationScreen');
   }, 700);
   };
 
