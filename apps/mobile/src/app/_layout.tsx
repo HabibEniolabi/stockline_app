@@ -10,7 +10,6 @@ import {
   Inter_800ExtraBold,
 } from '@expo-google-fonts/inter';
 import { useFonts } from 'expo-font';
-import * as Font from "expo-font"
 
 SplashScreen.preventAutoHideAsync();
 
@@ -76,6 +75,12 @@ const Layout = () => {
         />
          <Stack.Screen
           name="(auth)/OtpVerificationScreen"
+          options={{
+            animation: 'fade',
+          }}
+        />
+         <Stack.Screen
+          name="(auth)/WelcomeScreen"
           options={{
             animation: 'fade',
           }}
