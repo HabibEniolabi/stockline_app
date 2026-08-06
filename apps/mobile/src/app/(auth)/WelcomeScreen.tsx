@@ -4,23 +4,22 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 
 import { SuccessInfo } from '../../components/common/SuccessInfo';
 import { Button } from '../../components/ui/Button';
-import { AnimatedStockWaveLogo } from
-  '../../components/branding/AnimatedStockWaveLogo';
 import { colors } from '../../theme/colors';
 import { getTypography } from '../../theme/typography';
+import { ConfettiAnimation } from '../../components/animations/ConfettiAnimation';
+import { StockWaveSuccessMark } from '../../components/branding/StockWaveSuccessMark';
 
 export default function WelcomeScreen() {
   return (
     <SafeAreaView style={styles.safeArea}>
       <SuccessInfo
-        icon={
-          <AnimatedStockWaveLogo size={96} />
-        }
+        icon={<StockWaveSuccessMark size={96} />}
         title={
           <Text style={styles.title}>
-           {" Hello Agatha Bella! 👋\nWelcome to StockWave"}
+            {' Hello Agatha Bella! 👋\nWelcome to StockWave'}
           </Text>
         }
+        confetti={<ConfettiAnimation />}
         description="It’s great to have you here"
         footer={
           <Button

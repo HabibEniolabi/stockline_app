@@ -1,3 +1,4 @@
+import { useMemo } from 'react';
 import {
   StyleSheet,
   Text,
@@ -5,11 +6,12 @@ import {
   type StyleProp,
   type ViewStyle,
 } from 'react-native';
+import { AsYouType } from 'libphonenumber-js/max';
 
 import { colors } from '../../theme/colors';
 import { fontFamily } from '../../theme/typography';
 import { CountryPicker } from './CountryPicker';
-import type { Country } from '../../components/types/countries';
+import type { Country } from '../types/countries';
 import { TextField } from './TextField';
 
 type PhoneNumberFieldProps = {
@@ -29,23 +31,33 @@ export function PhoneNumberField({
   onChangeText,
   onCountryChange,
 }: PhoneNumberFieldProps) {
-  const handlePhoneChange = (text: string) => {
-    const numbersOnly = text.replace(/\D/g, '');
+  const formattedValue = useMemo(() => {
+    if (!value) {
+      return '';
+    }
 
-    onChangeText(numbersOnly);
+    return new AsYouType(country.iso2).input(value);
+  }, [country.iso2, value]);
+
+  const handlePhoneChange = (text: string) => {
+    const digitsOnly = text
+      .replace(/\D/g, '')
+      .slice(0, 15);
+
+    onChangeText(digitsOnly);
   };
 
   return (
     <TextField
-      value={value}
+      value={formattedValue}
       error={error}
       containerStyle={containerStyle}
-      placeholder="000-000-0000"
+      placeholder="Phone number"
       keyboardType="phone-pad"
       textContentType="telephoneNumber"
       autoComplete="tel"
       returnKeyType="done"
-      maxLength={15}
+      maxLength={25}
       onChangeText={handlePhoneChange}
       leftElement={
         <View style={styles.leftElement}>

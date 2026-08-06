@@ -1,5 +1,6 @@
+import type { CountryCode } from "libphonenumber-js/max";
 export type Country = {
-  iso2: string;
+  iso2: CountryCode;
   name: string;
   dialCode: string;
   flag: string;

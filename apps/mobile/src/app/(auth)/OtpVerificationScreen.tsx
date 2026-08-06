@@ -20,7 +20,7 @@ import { colors } from '../../theme/colors';
 import { spacing } from '../../theme/spacing';
 import { getTypography } from '../../theme/typography';
 
-const OTP_LENGTH = 6;
+const OTP_LENGTH = 5;
 const OTP_PREVIEW_DURATION = 6000;
 
 export default function OtpVerificationScreen() {
@@ -31,6 +31,7 @@ export default function OtpVerificationScreen() {
 
   const [otpStatus, setOtpStatus] = useState<OtpStatus>('default');
   const [shakeTrigger, setShakeTrigger] = useState(0)
+  const [isVerifying, setIsVerifying] = useState(false);
 
   useEffect(() => {
     // Opening the modal generates a new random OTP.
@@ -50,6 +51,10 @@ export default function OtpVerificationScreen() {
   };
 
   const handleVerifyCode = () => {
+    if(isVerifying) {
+      return;
+    }
+
     setError('');
 
     if (verificationCode.length !== OTP_LENGTH) {
@@ -70,7 +75,7 @@ export default function OtpVerificationScreen() {
 
   // Briefly show the green success state.
   setTimeout(() => {
-    router.replace('/(auth)/OtpVerificationScreen');
+    router.replace('/(auth)/WelcomeScreen');
   }, 700);
   };
 
@@ -114,6 +119,7 @@ export default function OtpVerificationScreen() {
                 length={OTP_LENGTH}
                 status={otpStatus}
                 shakeTrigger={shakeTrigger}
+                disabled={isVerifying}
                 autoFocus
               />
 
@@ -144,7 +150,7 @@ export default function OtpVerificationScreen() {
 
           <View style={styles.footer}>
             <Button
-              title="Verify account"
+              title={isVerifying ? "Verifying..." : "Verify Account"}
               variant="primary"
               disabled={codeIsIncomplete}
               onPress={handleVerifyCode}

@@ -29,7 +29,7 @@ type OtpInputProps = {
 export function OtpInput({
   value,
   onChangeText,
-  length = 6,
+  length = 5,
   autoFocus = false,
   disabled = false,
   status = 'default',
