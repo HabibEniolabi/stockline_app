@@ -20,7 +20,7 @@ import { colors } from '../../theme/colors';
 import { spacing } from '../../theme/spacing';
 import { getTypography } from '../../theme/typography';
 
-const OTP_LENGTH = 5;
+const OTP_LENGTH = 6;
 const OTP_PREVIEW_DURATION = 6000;
 
 export default function OtpVerificationScreen() {
@@ -30,7 +30,7 @@ export default function OtpVerificationScreen() {
   const [otpModalVisible, setOtpModalVisible] = useState(false);
 
   const [otpStatus, setOtpStatus] = useState<OtpStatus>('default');
-  const [shakeTrigger, setShakeTrigger] = useState(0)
+  const [shakeTrigger, setShakeTrigger] = useState(0);
   const [isVerifying, setIsVerifying] = useState(false);
 
   useEffect(() => {
@@ -38,45 +38,59 @@ export default function OtpVerificationScreen() {
     setOtpModalVisible(true);
   }, []);
 
+  const verifyCode = (code: string) => {
+    if (isVerifying || code.length !== OTP_LENGTH) {
+      return;
+    }
+
+    setError('');
+    setIsVerifying(true);
+
+    // Temporary delay so the loading state is visible.
+    setTimeout(() => {
+      if (code !== generatedOtp) {
+        setOtpStatus('error');
+        setShakeTrigger((current) => current + 1);
+        setError('The verification code is incorrect.');
+        setIsVerifying(false);
+        return;
+      }
+
+      setOtpStatus('success');
+
+      // Show the green state briefly before navigating.
+      setTimeout(() => {
+        router.replace('/(auth)/WelcomeScreen');
+      }, 700);
+    }, 400);
+  };
+
   const handleCodeChange = (value: string) => {
     setVerificationCode(value);
 
-    if(otpStatus !== "default") {
-      setOtpStatus("default");
+    if (otpStatus !== 'default') {
+      setOtpStatus('default');
     }
 
     if (error) {
       setError('');
     }
+
+    // Automatically verify immediately after the sixth digit.
+    if (value.length === OTP_LENGTH) {
+      verifyCode(value);
+    }
   };
 
   const handleVerifyCode = () => {
-    if(isVerifying) {
+    if (verificationCode.length !== OTP_LENGTH) {
+      setOtpStatus('error');
+      setShakeTrigger((current) => current + 1);
+      setError(`Enter the ${OTP_LENGTH}-digit verification code.`);
       return;
     }
 
-    setError('');
-
-    if (verificationCode.length !== OTP_LENGTH) {
-    setOtpStatus('error');
-    setShakeTrigger((current) => current + 1);
-    setError(`Enter the ${OTP_LENGTH}-digit verification code.`);
-    return;
-  }
-
-  if (verificationCode !== generatedOtp) {
-    setOtpStatus('error');
-    setShakeTrigger((current) => current + 1);
-    setError('The verification code is incorrect.');
-    return;
-  }
-
-  setOtpStatus('success');
-
-  // Briefly show the green success state.
-  setTimeout(() => {
-    router.replace('/(auth)/WelcomeScreen');
-  }, 700);
+    verifyCode(verificationCode);
   };
 
   const handleResendCode = () => {
@@ -84,12 +98,11 @@ export default function OtpVerificationScreen() {
     setGeneratedOtp('');
     setError('');
 
-    setOtpStatus("default")
+    setOtpStatus('default');
     setOtpModalVisible(true);
   };
 
-  const codeIsIncomplete =
-    verificationCode.length !== OTP_LENGTH;
+  const codeIsIncomplete = verificationCode.length !== OTP_LENGTH;
 
   return (
     <SafeAreaView style={styles.safeArea}>
@@ -123,11 +136,7 @@ export default function OtpVerificationScreen() {
                 autoFocus
               />
 
-              {error ? (
-                <Text style={styles.errorText}>
-                  {error}
-                </Text>
-              ) : null}
+              {error ? <Text style={styles.errorText}>{error}</Text> : null}
 
               <View style={styles.resendContainer}>
                 <Text style={styles.resendQuestion}>
@@ -140,9 +149,7 @@ export default function OtpVerificationScreen() {
                   hitSlop={8}
                   onPress={handleResendCode}
                 >
-                  <Text style={styles.resendText}>
-                    Resend code
-                  </Text>
+                  <Text style={styles.resendText}>Resend code</Text>
                 </Pressable>
               </View>
             </View>
@@ -150,8 +157,9 @@ export default function OtpVerificationScreen() {
 
           <View style={styles.footer}>
             <Button
-              title={isVerifying ? "Verifying..." : "Verify Account"}
+              title={isVerifying ? 'Verifying...' : 'Verify Account'}
               variant="primary"
+              loading={isVerifying}
               disabled={codeIsIncomplete}
               onPress={handleVerifyCode}
             />

@@ -6,13 +6,17 @@ import {
   type StyleProp,
   type ViewStyle,
 } from 'react-native';
-import { AsYouType } from 'libphonenumber-js/max';
+import {
+  AsYouType,
+  getExampleNumber,
+} from 'libphonenumber-js/max';
+import mobileExamples from 'libphonenumber-js/examples.mobile.json';
 
 import { colors } from '../../theme/colors';
 import { fontFamily } from '../../theme/typography';
 import { CountryPicker } from './CountryPicker';
-import type { Country } from '../types/countries';
 import { TextField } from './TextField';
+import type { Country } from '../types/countries';
 
 type PhoneNumberFieldProps = {
   value: string;
@@ -31,6 +35,24 @@ export function PhoneNumberField({
   onChangeText,
   onCountryChange,
 }: PhoneNumberFieldProps) {
+  const phoneDetails = useMemo(() => {
+    const exampleNumber = getExampleNumber(
+      country.iso2,
+      mobileExamples,
+    );
+
+    const placeholder =
+      exampleNumber?.formatNational() ?? '000 000 0000';
+
+    const maximumDigits =
+      exampleNumber?.nationalNumber.length ?? 15;
+
+    return {
+      placeholder,
+      maximumDigits,
+    };
+  }, [country.iso2]);
+
   const formattedValue = useMemo(() => {
     if (!value) {
       return '';
@@ -42,7 +64,7 @@ export function PhoneNumberField({
   const handlePhoneChange = (text: string) => {
     const digitsOnly = text
       .replace(/\D/g, '')
-      .slice(0, 15);
+      .slice(0, phoneDetails.maximumDigits);
 
     onChangeText(digitsOnly);
   };
@@ -52,12 +74,11 @@ export function PhoneNumberField({
       value={formattedValue}
       error={error}
       containerStyle={containerStyle}
-      placeholder="Phone number"
+      placeholder={phoneDetails.placeholder}
       keyboardType="phone-pad"
       textContentType="telephoneNumber"
       autoComplete="tel"
       returnKeyType="done"
-      maxLength={25}
       onChangeText={handlePhoneChange}
       leftElement={
         <View style={styles.leftElement}>

@@ -17,8 +17,6 @@ import { router } from 'expo-router';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { Button } from '../../components/ui/Button';
 import { getTypography } from '../../theme/typography';
-import Apple from '../../assets/icons/Apple';
-import Google from '../../assets/icons/Google';
 import { SocialSignIn } from '../../components/ui/SocianSignin';
 
 export default function SignUpScreen() {
@@ -157,9 +155,18 @@ export default function SignUpScreen() {
                 secureTextEntry
                 autoCapitalize="none"
                 autoCorrect={false}
-                autoComplete="new-password"
-                textContentType="newPassword"
+                // autoComplete="new-password"
+                // textContentType="newPassword"
                 onSubmitEditing={handleContinue}
+                {...Platform.select({
+    ios: {
+      textContentType: 'none' as const,
+    },
+    android: {
+      autoComplete: 'new-password' as const,
+      importantForAutofill: 'yes' as const,
+    },
+  })}
                 returnKeyType="done"
                 onChangeText={(value) => {
                   setPassword(value);
