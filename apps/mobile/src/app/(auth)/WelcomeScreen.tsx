@@ -26,7 +26,7 @@ export default function WelcomeScreen() {
             title="I’m ready to start!"
             variant="primary"
             onPress={() => {
-              router.replace('/(tabs)/home');
+              router.replace('/(auth)/BiometricSetupScreen');
             }}
           />
         }

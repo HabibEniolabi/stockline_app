@@ -29,7 +29,13 @@
         }
       ],
       "expo-font",
-      "expo-secure-store"
+      "expo-secure-store",
+      [
+        "expo-local-authentication",
+        {
+          "faceIDPermission": "Allow StockWave to use Face ID for secure access."
+        }
+      ]
     ],
     "experiments": {
       "typedRoutes": true

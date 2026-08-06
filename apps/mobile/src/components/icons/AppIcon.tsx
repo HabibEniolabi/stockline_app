@@ -21,7 +21,9 @@ export type AppIconName =
   | 'settings'
   | 'close'
   | 'back'
-  | 'visibilityOff';
+  | 'visibilityOff'
+  | 'faceId'
+  | 'fingerprint';
 
 interface AppIconProps {
   name: AppIconName;
@@ -94,6 +96,14 @@ const icons: Record<
   back: {
     default: 'chevron-back',
   },
+  fingerprint: {
+    default: 'finger-print-outline',
+    focused: 'finger-print'
+  },
+  faceId: {
+    default: 'finger-print-outline',
+    focused: 'finger-print'
+  }
 };
 
 export function AppIcon({

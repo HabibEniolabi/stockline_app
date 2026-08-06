@@ -5139,6 +5139,7 @@ __metadata:
     expo-font: "npm:~13.0.4"
     expo-image: "npm:~2.0.7"
     expo-linking: "npm:~7.0.5"
+    expo-local-authentication: "npm:~15.0.2"
     expo-router: "npm:~4.0.20"
     expo-secure-store: "npm:~14.0.1"
     expo-splash-screen: "npm:~0.29.24"
@@ -9665,6 +9666,17 @@ __metadata:
     react: "*"
     react-native: "*"
   checksum: 10c0/403a34d7464d398a2d141237172bb6b4e2bdb302940e55cee0fa52f49e9b70056005cd04cce44483daa3d9573b963714fb55af03ab01999853d89bee9faa6755
+  languageName: node
+  linkType: hard
+
+"expo-local-authentication@npm:~15.0.2":
+  version: 15.0.2
+  resolution: "expo-local-authentication@npm:15.0.2"
+  dependencies:
+    invariant: "npm:^2.2.4"
+  peerDependencies:
+    expo: "*"
+  checksum: 10c0/5c2f8fe627a6d0920d2104bb1ef41306ee35e2204d65c32224944a91860b0e8c1cc8f6dba7601080e6df85ee6bf37cfb092879443f474d73d888e29dd1d789fa
   languageName: node
   linkType: hard
 
