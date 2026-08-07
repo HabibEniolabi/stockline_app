@@ -311,7 +311,7 @@ const styles = StyleSheet.create({
   },
 
   skipText: {
-    ...getTypography('bodyMedium', 'semiBold'),
+    ...getTypography('bodyLarge', 'semiBold'),
     color: colors.primary[100],
   },
 });

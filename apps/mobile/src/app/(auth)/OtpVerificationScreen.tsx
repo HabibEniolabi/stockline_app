@@ -33,6 +33,9 @@ export default function OtpVerificationScreen() {
   const [shakeTrigger, setShakeTrigger] = useState(0);
   const [isVerifying, setIsVerifying] = useState(false);
 
+  const VERIFY_DELAY = 700;
+  const SUCCESS_DELAY = 900;
+
   useEffect(() => {
     // Opening the modal generates a new random OTP.
     setOtpModalVisible(true);
@@ -83,6 +86,12 @@ export default function OtpVerificationScreen() {
   };
 
   const handleVerifyCode = () => {
+    if (isVerifying) {
+      return;
+    }
+
+    setError('');
+
     if (verificationCode.length !== OTP_LENGTH) {
       setOtpStatus('error');
       setShakeTrigger((current) => current + 1);
@@ -90,7 +99,28 @@ export default function OtpVerificationScreen() {
       return;
     }
 
-    verifyCode(verificationCode);
+    setIsVerifying(true);
+    setOtpStatus('default');
+
+    // Hold briefly while showing "Verifying..."
+    setTimeout(() => {
+      if (verificationCode !== generatedOtp) {
+        setOtpStatus('error');
+        setShakeTrigger((current) => current + 1);
+        setError('The verification code is incorrect.');
+        setIsVerifying(false);
+        return;
+      }
+
+      // Turn the boxes green and trigger a lighter wiggle.
+      setOtpStatus('success');
+      setShakeTrigger((current) => current + 1);
+
+      // Keep the success state visible before navigating.
+      setTimeout(() => {
+        router.replace('/(auth)/WelcomeScreen');
+      }, SUCCESS_DELAY);
+    }, VERIFY_DELAY);
   };
 
   const handleResendCode = () => {

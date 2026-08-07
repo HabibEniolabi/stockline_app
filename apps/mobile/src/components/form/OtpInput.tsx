@@ -13,7 +13,7 @@ import {
 import { colors } from '../../theme/colors';
 import { fontFamily } from '../../theme/typography';
 
-export type OtpStatus = "default" | "error" | "success";
+export type OtpStatus = 'default' | 'error' | 'success';
 
 type OtpInputProps = {
   value: string;
@@ -41,55 +41,44 @@ export function OtpInput({
 
   const [isFocused, setIsFocused] = useState(false);
 
-  const digits = Array.from(
-    { length },
-    (_, index) => value[index] ?? '',
-  );
+  const digits = Array.from({ length }, (_, index) => value[index] ?? '');
 
-  const activeIndex =
-    value.length >= length ? length - 1 : value.length;
+  const activeIndex = value.length >= length ? length - 1 : value.length;
 
   useEffect(() => {
-    if (status !== 'error' || shakeTrigger === 0) {
+    if ((status !== 'error' && status !== 'success') || shakeTrigger === 0) {
       return;
     }
 
     translateX.setValue(0);
 
+    const distance = status === 'error' ? 10 : 4;
+    const duration = status === 'error' ? 50 : 80;
+
     Animated.sequence([
       Animated.timing(translateX, {
-        toValue: -10,
-        duration: 50,
+        toValue: -distance,
+        duration,
         useNativeDriver: true,
       }),
       Animated.timing(translateX, {
-        toValue: 10,
-        duration: 50,
+        toValue: distance,
+        duration,
         useNativeDriver: true,
       }),
       Animated.timing(translateX, {
-        toValue: -8,
-        duration: 50,
+        toValue: -(distance * 0.6),
+        duration,
         useNativeDriver: true,
       }),
       Animated.timing(translateX, {
-        toValue: 8,
-        duration: 50,
-        useNativeDriver: true,
-      }),
-      Animated.timing(translateX, {
-        toValue: -4,
-        duration: 50,
-        useNativeDriver: true,
-      }),
-      Animated.timing(translateX, {
-        toValue: 4,
-        duration: 50,
+        toValue: distance * 0.6,
+        duration,
         useNativeDriver: true,
       }),
       Animated.timing(translateX, {
         toValue: 0,
-        duration: 50,
+        duration,
         useNativeDriver: true,
       }),
     ]).start();
@@ -101,10 +90,10 @@ export function OtpInput({
   };
 
   const handlePress = () => {
-    if(!disabled){
+    if (!disabled) {
       inputRef.current?.focus();
     }
-  }
+  };
 
   return (
     <Animated.View
@@ -141,9 +130,7 @@ export function OtpInput({
 
         {digits.map((digit, index) => {
           const isActive =
-            isFocused &&
-            index === activeIndex &&
-            status === 'default';
+            isFocused && index === activeIndex && status === 'default';
 
           return (
             <View
@@ -161,8 +148,7 @@ export function OtpInput({
                   style={[
                     styles.digit,
                     status === 'error' && styles.digitError,
-                    status === 'success' &&
-                      styles.digitSuccess,
+                    status === 'success' && styles.digitSuccess,
                   ]}
                 >
                   {digit}

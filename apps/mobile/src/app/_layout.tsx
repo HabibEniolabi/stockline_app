@@ -85,6 +85,12 @@ const Layout = () => {
             animation: 'fade',
           }}
         />
+         <Stack.Screen
+          name="(auth)/BiometricSetupScreen"
+          options={{
+            animation: 'fade',
+          }}
+        />
       </Stack>
     </>
   );
